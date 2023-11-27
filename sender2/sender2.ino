@@ -124,7 +124,8 @@ void loop() {
   float gyro_angle_z = gz*dt + last_z_angle;
 
   float roll_1 = atan(ay/sqrt(ax *ax + az * az));
-  float pitch_1 = atan(-ax/ sqrt(ay * ay + az * az));
+  //float pitch_1 = atan(-ax/ sqrt(ay * ay + az * az));
+  float pitch_1 = atan(ax/ sqrt(ay * ay + az * az));
   float pitch = 0;
   float roll = 0;
 

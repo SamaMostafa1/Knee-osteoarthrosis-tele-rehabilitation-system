@@ -123,7 +123,8 @@ void loop() {
 
 
   float roll_1 = atan(ay/sqrt(ax *ax + az * az));
-  float pitch_1 = atan(-ax/ sqrt(ay * ay + az * az));
+  //float pitch_1 = atan(-ax/ sqrt(ay * ay + az * az));
+  float pitch_1 = atan(ax/ sqrt(ay * ay + az * az));
   float pitch = 0;
   float roll = 0;
 
