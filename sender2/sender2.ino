@@ -124,8 +124,9 @@ void loop() {
   float gyro_angle_z = gz*dt + last_z_angle;
 
   float roll_1 = atan(ay/sqrt(ax *ax + az * az));
-  //float pitch_1 = atan(-ax/ sqrt(ay * ay + az * az));
-  float pitch_1 = atan(ax/ sqrt(ay * ay + az * az));
+  //float roll_1 = atan(ay/ az);
+  float pitch_1 = atan(-ax/ sqrt(ay * ay + az * az));
+  //float pitch_1 = atan(ax/ sqrt(ay * ay + az * az));
   float pitch = 0;
   float roll = 0;
 
@@ -142,15 +143,15 @@ void loop() {
   set_last_read_angle_data(t_now, angle_x, angle_y, angle_z);
 
   Serial.println("Sent sensor data");
-  //Serial.println(pitch);
-  //Serial.println(roll);
+  // Serial.println(pitch);
+  // Serial.println(roll);
 
   Serial.println(angle_x);
   Serial.println(angle_y);
 
   // Set values to send
   strcpy(myData.esp_no, "C");
-  myData.Roll = roll ;
+  myData.Roll = roll;
   myData.Pitch = pitch;
   
   // Send message via ESP-NOW
