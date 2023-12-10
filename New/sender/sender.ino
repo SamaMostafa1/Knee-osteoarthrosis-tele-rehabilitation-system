@@ -17,11 +17,13 @@ struct Calibration
   char cal_gyr_z;
 };
 
-float         last_x_angle=0;  // These are the filtered angles
-float         last_y_angle=0;
-float         last_z_angle=0;  
-unsigned long last_read_time=millis(); 
-void set_last_read_angle_data(unsigned long time,float x, float y, float z) {
+float         last_x_angle = 0;  // These are the filtered angles
+float         last_y_angle = 0;
+float         last_z_angle = 0;  
+unsigned long last_read_time = millis(); 
+
+void set_last_read_angle_data(unsigned long time,float x, float y, float z)
+{
   last_read_time = time;
   last_x_angle = x;
   last_y_angle = y;
@@ -44,7 +46,8 @@ struct_message myData;
 esp_now_peer_info_t peerInfo;
 
 // callback when data is sent
-void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
+void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status)
+{
   Serial.print("\r\nLast Packet Send Status:\t");
   Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
 }
@@ -86,18 +89,19 @@ void setup() {
       delay(10);
     }
   }
-
- mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
-
+  
+  mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
+ 
   mpu.setGyroRange(MPU6050_RANGE_500_DEG);
-
+ 
   mpu.setFilterBandwidth(MPU6050_BAND_5_HZ);
 
   delay(100);
 
 }
  
-void loop() {
+void loop()
+{
   // Get sensor readings from MPU6050
   unsigned long t_now = millis();
   sensors_event_t a, g,temp;
@@ -114,13 +118,11 @@ void loop() {
   float gy = g.gyro.y;
   float gz = g.gyro.z;
 
-
-      // Compute the (filtered) gyro angles
+  // Compute the (filtered) gyro angles
   float dt =(t_now - last_read_time)/1000.0;
   float gyro_angle_x = gx*dt + last_x_angle;
   float gyro_angle_y = gy*dt + last_y_angle;
   float gyro_angle_z = gz*dt + last_z_angle;
-
 
   float roll_1 = atan(ay/sqrt(ax *ax + az * az));
   //float roll_1 = atan(ay/az);
@@ -148,12 +150,10 @@ void loop() {
   Serial.println(angle_x);
   Serial.println(angle_y);
 
-
   // Set values to send
   strcpy(myData.esp_no, "T");
   myData.Roll = angle_x ;
   myData.Pitch = angle_y;
-
   
   // Send message via ESP-NOW
   esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &myData, sizeof(myData));
@@ -168,3 +168,4 @@ void loop() {
   }
   delay(200);
 }
+

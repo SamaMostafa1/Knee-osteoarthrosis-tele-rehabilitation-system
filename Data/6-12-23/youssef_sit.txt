@@ -1,0 +1,1083 @@
+le_P: 1.74
+Bytes received: 
+ Calf roll: 10.11
+Calf pitch-7.85
+Bytes received: 
+ Thigh roll: 15.76
+thigh pitch72.07
+	Time (s): 97.05
+Roll Angle: 11.85
+Pitch Angle: 62.44
+Bytes received: 
+ Calf .49
+Bytes received: 
+ Calf roll: 3.85
+Calf pitch10.17
+	Time (s): 105.82
+Roll Angle: 11.92
+Pitch Angle: 61.91
+Bytes received: 
+ Th4
+Pitch Angle: 62.44
+Bytes received: 
+ Thigh roll: 16.03
+thigh pitch71.83
+	Time (s): 138.74
+Roll Angle: 12.50
+Pitch Angle: 62.30
+Bytes received: 
+ Calf roll: 3.54
+Calf pitch9.53
+	Time (s): 139.74
+Roll Angle: 12.50
+Pitch Angle: 62.30
+Bytes received: 
+ Calf roll: 3.66
+Calf pitch9.52
+	Time (s): 140.74
+Roll Angle: 12.38
+Pitch Angle: 62.31
+Bytes received: 
+ Thigh roll: 15.99
+thigh pitch71.79
+	Time (s): 141.74
+Roll Angle: 12.33
+Pitch Angle: 62.27
+Bytes received: 
+ Calf roll: 2.45
+Calf pitch3.29
+	Time (s): 142.74
+Roll Angle: 13.54
+Pitch Angle: 68.50
+Bytes received: 
+ Thigh roll: 16.05
+thigh pitch71.75
+	Time (s): 143.74
+Roll Angle: 13.61
+Pitch Angle: 68.46
+Bytes received: 
+ Calf roll: 0.51
+Calf pitch3.90
+	Time (s): 144.74
+Roll Angle: 15.55
+Pitch Angle: 67.85
+Bytes received: 
+ Thigh roll: 16.33
+thigh pitch71.28
+	Time (s): 145.74
+Roll Angle: 15.82
+Pitch Angle: 67.38
+Bytes received: 
+ Thigh roll: 16.97
+thigh pitch70.62
+	Time (s): 146.74
+Roll Angle: 16.47
+Pitch Angle: 66.72
+Bytes received: 
+ Calf roll: 12.27
+Calf pitch-4.53
+	Time (s): 147.74
+Roll Angle: 4.70
+Pitch Angle: 75.15
+Bytes received: 
+ Thigh roll: 17.14
+thigh pitch70.46
+	Time (s): 148.74
+Roll Angle: 4.86
+Pitch Angle: 74.98
+Bytes received: 
+ Calf roll: 9.61
+Calf pitch-3.65
+	Time (s): 149.74
+Roll Angle: 7.52
+Pitch Angle: 74.11
+Bytes received: 
+ Thigh roll: 18.42
+thigh pitch68.87
+	Time (s): 150.74
+Roll Angle: 8.81
+Pitch Angle: 72.52
+Bytes received: 
+ Calf roll: 12.44
+Calf pitch-3.64
+	Time (s): 151.74
+Roll Angle: 5.98
+Pitch Angle: 72.51
+Bytes received: 
+ Thigh roll: 21.64
+thigh pitch65.81
+	Time (s): 152.74
+Roll Angle: 9.20
+Pitch Angle: 69.46
+Bytes received: 
+ Calf roll: 12.51
+Calf pitch-3.74
+	Time (s): 153.74
+Roll Angle: 9.13
+Pitch Angle: 69.55
+Bytes received: 
+ Calf roll: 12.37
+Calf pitch-3.79
+	Time (s): 154.74
+Roll Angle: 9.27
+Pitch Angle: 69.60
+Bytes received: 
+ Thigh roll: 22.87
+thigh pitch64.59
+	Time (s): 155.74
+Roll Angle: 10.51
+Pitch Angle: 68.37
+Bytes received: 
+ Calf roll: 12.56
+Calf pitch-8.49
+	Time (s): 156.74
+Roll Angle: 10.31
+Pitch Angle: 73.08
+Bytes received: 
+ Thigh roll: 23.90
+thigh pitch63.33
+	Time (s): 157.74
+Roll Angle: 11.34
+Pitch Angle: 71.83
+Bytes received: 
+ Calf roll: 12.56
+Calf pitch-8.49
+	Time (s): 158.74
+Roll Angle: 11.34
+Pitch Angle: 71.83
+Bytes received: 
+ Calf roll: 12.54
+Calf pitch-8.36
+	Time (s): 159.74
+Roll Angle: 11.37
+Pitch Angle: 71.69
+Bytes received: 
+ Thigh roll: 24.39
+thigh pitch62.74
+	Time (s): 160.74
+Roll Angle: 11.85
+Pitch Angle: 71.10
+Bytes received: 
+ Calf roll: 12.54
+Calf pitch-8.36
+	Time (s): 161.74
+Roll Angle: 11.85
+Pitch Angle: 71.10
+Bytes received: 
+ Calf roll: 12.44
+Calf pitch-8.42
+	Time (s): 162.74
+Roll Angle: 11.95
+Pitch Angle: 71.17
+Bytes received: 
+ Thigh roll: 24.84
+thigh pitch62.20
+	Time (s): 163.74
+Roll Angle: 12.40
+Pitch Angle: 70.62
+Bytes received: 
+ Calf roll: 12.46
+Calf pitch-8.50
+	Time (s): 164.74
+Roll Angle: 12.38
+Pitch Angle: 70.70
+Bytes received: 
+ Calf roll: 12.53
+Calf pitch-8.41
+	Time (s): 165.74
+Roll Angle: 12.32
+Pitch Angle: 70.61
+Bytes received: 
+ Thigh roll: 25.11
+thigh pitch61.87
+	Time (s): 166.74
+Roll Angle: 12.59
+Pitch Angle: 70.28
+Bytes received: 
+ Calf roll: 12.53
+Calf pitch-8.41
+	Time (s): 167.74
+Roll Angle: 12.59
+Pitch Angle: 70.28
+Bytes received: 
+ Calf roll: 12.66
+Calf pitch-7.85
+	Time (s): 168.74
+Roll Angle: 12.46
+Pitch Angle: 69.72
+Bytes received: 
+ Thigh roll: 25.31
+thigh pitch61.67
+	Time (s): 169.74
+Roll Angle: 12.65
+Pitch Angle: 69.52
+Bytes received: 
+ Calf roll: 12.58
+Calf pitch-8.36
+	Time (s): 170.74
+Roll Angle: 12.73
+Pitch Angle: 70.03
+Bytes received: 
+ Thigh roll: 25.44
+thigh pitch61.53
+	Time (s): 171.74
+Roll Angle: 12.86
+Pitch Angle: 69.89
+Bytes received: 
+ Calf roll: 12.40
+Calf pitch-8.49
+	Time (s): 172.74
+Roll Angle: 13.04
+Pitch Angle: 70.02
+Bytes received: 
+ Thigh roll: 25.49
+thigh pitch61.46
+	Time (s): 173.74
+Roll Angle: 13.09
+Pitch Angle: 69.96
+Bytes received: 
+ Thigh roll: 25.57
+thigh pitch61.43
+	Time (s): 174.74
+Roll Angle: 13.17
+Pitch Angle: 69.92
+Bytes received: 
+ Calf roll: 0.14
+Calf pitch-3.70
+	Time (s): 175.74
+Roll Angle: 25.43
+Pitch Angle: 65.13
+Bytes received: 
+ Calf roll: 5.14
+Calf pitch-6.08
+	Time (s): 176.74
+Roll Angle: 20.43
+Pitch Angle: 67.51
+Bytes received: 
+ Thigh roll: 22.24
+thigh pitch64.87
+	Time (s): 177.74
+Roll Angle: 17.10
+Pitch Angle: 70.95
+Bytes received: 
+ Calf roll: 5.14
+Calf pitch-6.08
+	Time (s): 178.74
+Roll Angle: 17.10
+Pitch Angle: 70.95
+Bytes received: 
+ Calf roll: 5.87
+Calf pitch-6.72
+	Time (s): 179.74
+Roll Angle: 16.37
+Pitch Angle: 71.60
+Bytes received: 
+ Thigh roll: 22.43
+thigh pitch64.73
+	Time (s): 180.74
+Roll Angle: 16.56
+Pitch Angle: 71.46
+Bytes received: 
+ Calf roll: 5.74
+Calf pitch-6.55
+	Time (s): 181.74
+Roll Angle: 16.68
+Pitch Angle: 71.29
+Bytes received: 
+ Thigh roll: 22.84
+thigh pitch64.41
+	Time (s): 182.74
+Roll Angle: 17.10
+Pitch Angle: 70.96
+Bytes received: 
+ Calf roll: 5.17
+Calf pitch-6.14
+	Time (s): 183.74
+Roll Angle: 17.67
+Pitch Angle: 70.55
+Bytes received: 
+ Thigh roll: 23.03
+thigh pitch64.25
+	Time (s): 184.74
+Roll Angle: 17.85
+Pitch Angle: 70.39
+Bytes received: 
+ Calf roll: 5.66
+Calf pitch-6.55
+	Time (s): 185.74
+Roll Angle: 17.37
+Pitch Angle: 70.80
+Bytes received: 
+ Thigh roll: 23.14
+thigh pitch64.17
+	Time (s): 186.74
+Roll Angle: 17.47
+Pitch Angle: 70.72
+Bytes received: 
+ Calf roll: 5.81
+Calf pitch-6.64
+	Time (s): 187.74
+Roll Angle: 17.33
+Pitch Angle: 70.81
+Bytes received: 
+ Calf roll: 5.83
+Calf pitch-6.61
+	Time (s): 188.74
+Roll Angle: 17.31
+Pitch Angle: 70.78
+Bytes received: 
+ Thigh roll: 23.26
+thigh pitch64.06
+	Time (s): 189.74
+Roll Angle: 17.43
+Pitch Angle: 70.67
+Bytes received: 
+ Calf roll: 5.77
+Calf pitch-6.55
+	Time (s): 190.74
+Roll Angle: 17.49
+Pitch Angle: 70.61
+Bytes received: 
+ Thigh roll: 23.32
+thigh pitch64.01
+	Time (s): 191.74
+Roll Angle: 17.55
+Pitch Angle: 70.56
+Bytes received: 
+ Calf roll: 5.89
+Calf pitch-6.59
+	Time (s): 192.74
+Roll Angle: 17.44
+Pitch Angle: 70.60
+Bytes received: 
+ Thigh roll: 23.33
+thigh pitch64.00
+	Time (s): 193.74
+Roll Angle: 17.45
+Pitch Angle: 70.59
+Bytes received: 
+ Calf roll: 5.71
+Calf pitch-6.55
+	Time (s): 194.74
+Roll Angle: 17.62
+Pitch Angle: 70.55
+Bytes received: 
+ Thigh roll: 23.41
+thigh pitch63.92
+	Time (s): 195.74
+Roll Angle: 17.70
+Pitch Angle: 70.48
+Bytes received: 
+ Calf roll: 6.20
+Calf pitch-6.84
+	Time (s): 196.74
+Roll Angle: 17.21
+Pitch Angle: 70.76
+Bytes received: 
+ Thigh roll: 23.38
+thigh pitch63.89
+	Time (s): 197.74
+Roll Angle: 17.18
+Pitch Angle: 70.73
+Bytes received: 
+ Calf roll: 6.20
+Calf pitch-6.84
+	Time (s): 198.74
+Roll Angle: 17.18
+Pitch Angle: 70.73
+Bytes received: 
+ Calf roll: 6.06
+Calf pitch-6.65
+	Time (s): 199.74
+Roll Angle: 17.32
+Pitch Angle: 70.54
+Bytes received: 
+ Thigh roll: 19.19
+thigh pitch68.02
+	Time (s): 200.74
+Roll Angle: 13.12
+Pitch Angle: 74.67
+Bytes received: 
+ Calf roll: 7.07
+Calf pitch-7.10
+	Time (s): 201.74
+Roll Angle: 12.12
+Pitch Angle: 75.12
+Bytes received: 
+ Thigh roll: 16.60
+thigh pitch70.70
+	Time (s): 202.74
+Roll Angle: 9.53
+Pitch Angle: 77.80
+Bytes received: 
+ Calf roll: 5.46
+Calf pitch-6.85
+	Time (s): 203.74
+Roll Angle: 11.14
+Pitch Angle: 77.55
+Bytes received: 
+ Calf roll: 6.45
+Calf pitch-4.70
+	Time (s): 204.74
+Roll Angle: 10.15
+Pitch Angle: 75.40
+Bytes received: 
+ Thigh roll: 15.11
+thigh pitch72.19
+	Time (s): 205.74
+Roll Angle: 8.66
+Pitch Angle: 76.89
+Bytes received: 
+ Calf roll: 6.45
+Calf pitch-4.70
+	Time (s): 206.74
+Roll Angle: 8.66
+Pitch Angle: 76.89
+Bytes received: 
+ Thigh roll: 15.11
+thigh pitch72.19
+	Time (s): 207.74
+Roll Angle: 8.66
+Pitch Angle: 76.89
+Bytes received: 
+ Calf roll: 6.33
+Calf pitch-4.83
+	Time (s): 208.74
+Roll Angle: 8.79
+Pitch Angle: 77.02
+Bytes received: 
+ Thigh roll: 14.53
+thigh pitch72.78
+	Time (s): 209.74
+Roll Angle: 8.20
+Pitch Angle: 77.61
+Bytes received: 
+ Thigh roll: 13.90
+thigh pitch73.39
+	Time (s): 210.74
+Roll Angle: 7.57
+Pitch Angle: 78.22
+Bytes received: 
+ Calf roll: 6.59
+Calf pitch-5.03
+	Time (s): 211.74
+Roll Angle: 7.31
+Pitch Angle: 78.43
+Bytes received: 
+ Thigh roll: 13.90
+thigh pitch73.39
+	Time (s): 212.74
+Roll Angle: 7.31
+Pitch Angle: 78.43
+Bytes received: 
+ Calf roll: 6.55
+Calf pitch-5.15
+	Time (s): 213.74
+Roll Angle: 7.35
+Pitch Angle: 78.54
+Bytes received: 
+ Thigh roll: 13.72
+thigh pitch73.57
+	Time (s): 214.74
+Roll Angle: 7.17
+Pitch Angle: 78.72
+Bytes received: 
+ Calf roll: 6.55
+Calf pitch-5.15
+	Time (s): 215.74
+Roll Angle: 7.17
+Pitch Angle: 78.72
+Bytes received: 
+ Thigh roll: 13.56
+thigh pitch73.71
+	Time (s): 216.74
+Roll Angle: 7.01
+Pitch Angle: 78.87
+Bytes received: 
+ Calf roll: 6.38
+Calf pitch-4.98
+	Time (s): 217.74
+Roll Angle: 7.18
+Pitch Angle: 78.69
+Bytes received: 
+ Thigh roll: 13.56
+thigh pitch73.72
+	Time (s): 218.74
+Roll Angle: 7.18
+Pitch Angle: 78.70
+Bytes received: 
+ Calf roll: 6.38
+Calf pitch-4.98
+	Time (s): 219.74
+Roll Angle: 7.18
+Pitch Angle: 78.70
+Bytes received: 
+ Calf roll: 6.42
+Calf pitch-5.02
+	Time (s): 220.74
+Roll Angle: 7.14
+Pitch Angle: 78.74
+Bytes received: 
+ Calf roll: 2.86
+Calf pitch-3.58
+	Time (s): 221.74
+Roll Angle: 10.69
+Pitch Angle: 77.29
+Bytes received: 
+ Thigh roll: 12.37
+thigh pitch75.02
+	Time (s): 222.74
+Roll Angle: 9.51
+Pitch Angle: 78.60
+Bytes received: 
+ Calf roll: 2.63
+Calf pitch-3.56
+	Time (s): 223.74
+Roll Angle: 9.75
+Pitch Angle: 78.59
+Bytes received: 
+ Calf roll: 2.76
+Calf pitch-3.58
+	Time (s): 224.74
+Roll Angle: 9.62
+Pitch Angle: 78.60
+Bytes received: 
+ Thigh roll: 12.34
+thigh pitch75.05
+	Time (s): 225.74
+Roll Angle: 9.58
+Pitch Angle: 78.63
+Bytes received: 
+ Calf roll: 2.76
+Calf pitch-3.58
+	Time (s): 226.74
+Roll Angle: 9.58
+Pitch Angle: 78.63
+Bytes received: 
+ Calf roll: 2.58
+Calf pitch-3.37
+	Time (s): 227.74
+Roll Angle: 9.76
+Pitch Angle: 78.42
+Bytes received: 
+ Thigh roll: 12.19
+thigh pitch75.18
+	Time (s): 228.74
+Roll Angle: 9.61
+Pitch Angle: 78.56
+Bytes received: 
+ Thigh roll: 12.10
+thigh pitch75.25
+	Time (s): 229.74
+Roll Angle: 9.52
+Pitch Angle: 78.62
+Bytes received: 
+ Calf roll: 2.47
+Calf pitch-3.39
+	Time (s): 230.74
+Roll Angle: 9.63
+Pitch Angle: 78.64
+Bytes received: 
+ Calf roll: 2.69
+Calf pitch-3.53
+	Time (s): 231.74
+Roll Angle: 9.41
+Pitch Angle: 78.78
+Bytes received: 
+ Thigh roll: 12.05
+thigh pitch75.29
+	Time (s): 232.74
+Roll Angle: 9.36
+Pitch Angle: 78.82
+Bytes received: 
+ Calf roll: 2.69
+Calf pitch-3.53
+	Time (s): 233.74
+Roll Angle: 9.36
+Pitch Angle: 78.82
+Bytes received: 
+ Calf roll: 2.56
+Calf pitch-3.50
+	Time (s): 234.74
+Roll Angle: 9.49
+Pitch Angle: 78.79
+Bytes received: 
+ Thigh roll: 12.06
+thigh pitch75.28
+	Time (s): 235.74
+Roll Angle: 9.49
+Pitch Angle: 78.78
+Bytes received: 
+ Calf roll: 2.56
+Calf pitch-3.50
+	Time (s): 236.74
+Roll Angle: 9.49
+Pitch Angle: 78.78
+Bytes received: 
+ Calf roll: 2.63
+Calf pitch-3.43
+	Time (s): 237.74
+Roll Angle: 9.43
+Pitch Angle: 78.71
+Bytes received: 
+ Thigh roll: 12.09
+thigh pitch75.25
+	Time (s): 238.74
+Roll Angle: 9.47
+Pitch Angle: 78.68
+Bytes received: 
+ Calf roll: 2.75
+Calf pitch-3.48
+	Time (s): 239.74
+Roll Angle: 9.34
+Pitch Angle: 78.73
+Bytes received: 
+ Thigh roll: 12.12
+thigh pitch75.23
+	Time (s): 240.74
+Roll Angle: 9.37
+Pitch Angle: 78.71
+Bytes received: 
+ Thigh roll: 12.13
+thigh pitch75.21
+	Time (s): 241.74
+Roll Angle: 9.38
+Pitch Angle: 78.69
+Bytes received: 
+ Calf roll: 2.74
+Calf pitch-3.43
+	Time (s): 242.74
+Roll Angle: 9.40
+Pitch Angle: 78.64
+Bytes received: 
+ Thigh roll: 12.13
+thigh pitch75.20
+	Time (s): 243.74
+Roll Angle: 9.40
+Pitch Angle: 78.64
+Bytes received: 
+ Calf roll: 2.84
+Calf pitch-3.66
+	Time (s): 244.74
+Roll Angle: 9.29
+Pitch Angle: 78.87
+Bytes received: 
+ Thigh roll: 12.12
+thigh pitch75.22
+	Time (s): 245.74
+Roll Angle: 9.28
+Pitch Angle: 78.89
+Bytes received: 
+ Calf roll: 2.62
+Calf pitch-3.62
+	Time (s): 246.74
+Roll Angle: 9.50
+Pitch Angle: 78.84
+Bytes received: 
+ Thigh roll: 12.12
+thigh pitch75.22
+	Time (s): 247.74
+Roll Angle: 9.49
+Pitch Angle: 78.84
+Bytes received: 
+ Calf roll: 2.79
+Calf pitch-3.52
+	Time (s): 248.74
+Roll Angle: 9.33
+Pitch Angle: 78.74
+Bytes received: 
+ Thigh roll: 12.16
+thigh pitch75.17
+	Time (s): 249.74
+Roll Angle: 9.38
+Pitch Angle: 78.68
+Bytes received: 
+ Calf roll: 2.80
+Calf pitch-3.58
+	Time (s): 250.74
+Roll Angle: 9.36
+Pitch Angle: 78.74
+Bytes received: 
+ Thigh roll: 12.21
+thigh pitch75.11
+	Time (s): 251.74
+Roll Angle: 9.41
+Pitch Angle: 78.69
+Bytes received: 
+ Calf roll: 2.65
+Calf pitch-3.42
+	Time (s): 252.74
+Roll Angle: 9.56
+Pitch Angle: 78.54
+Bytes received: 
+ Thigh roll: 12.18
+thigh pitch75.14
+	Time (s): 253.74
+Roll Angle: 9.53
+Pitch Angle: 78.57
+Bytes received: 
+ Calf roll: 2.83
+Calf pitch-3.57
+	Time (s): 254.74
+Roll Angle: 9.35
+Pitch Angle: 78.72
+Bytes received: 
+ Thigh roll: 12.20
+thigh pitch75.11
+	Time (s): 255.74
+Roll Angle: 9.38
+Pitch Angle: 78.68
+Bytes received: 
+ Calf roll: 2.83
+Calf pitch-3.55
+	Time (s): 256.74
+Roll Angle: 9.37
+Pitch Angle: 78.65
+Bytes received: 
+ Thigh roll: 12.21
+thigh pitch75.10
+	Time (s): 257.74
+Roll Angle: 9.38
+Pitch Angle: 78.65
+Bytes received: 
+ Calf roll: 2.83
+Calf pitch-3.55
+	Time (s): 258.74
+Roll Angle: 9.38
+Pitch Angle: 78.65
+Bytes received: 
+ Calf roll: 2.74
+Calf pitch-3.61
+	Time (s): 259.74
+Roll Angle: 9.47
+Pitch Angle: 78.71
+Bytes received: 
+ Calf roll: 2.76
+Calf pitch-3.42
+	Time (s): 260.74
+Roll Angle: 9.45
+Pitch Angle: 78.52
+Bytes received: 
+ Thigh roll: 12.24
+thigh pitch75.08
+	Time (s): 261.74
+Roll Angle: 9.48
+Pitch Angle: 78.50
+Bytes received: 
+ Calf roll: 2.76
+Calf pitch-3.42
+	Time (s): 262.74
+Roll Angle: 9.48
+Pitch Angle: 78.50
+Bytes received: 
+ Calf roll: 2.90
+Calf pitch-3.46
+	Time (s): 263.74
+Roll Angle: 9.34
+Pitch Angle: 78.54
+Bytes received: 
+ Thigh roll: 12.27
+thigh pitch75.05
+	Time (s): 264.74
+Roll Angle: 9.37
+Pitch Angle: 78.51
+Bytes received: 
+ Calf roll: 2.68
+Calf pitch-3.41
+	Time (s): 265.74
+Roll Angle: 9.59
+Pitch Angle: 78.45
+Bytes received: 
+ Calf roll: 2.84
+Calf pitch-3.56
+	Time (s): 266.74
+Roll Angle: 9.43
+Pitch Angle: 78.60
+Bytes received: 
+ Thigh roll: 12.28
+thigh pitch75.04
+	Time (s): 267.74
+Roll Angle: 9.44
+Pitch Angle: 78.59
+Bytes received: 
+ Calf roll: 3.30
+Calf pitch-3.68
+	Time (s): 268.74
+Roll Angle: 8.99
+Pitch Angle: 78.71
+Bytes received: 
+ Calf roll: 2.72
+Calf pitch-3.34
+	Time (s): 269.74
+Roll Angle: 9.56
+Pitch Angle: 78.38
+Bytes received: 
+ Thigh roll: 12.29
+thigh pitch75.04
+	Time (s): 270.74
+Roll Angle: 9.57
+Pitch Angle: 78.38
+Bytes received: 
+ Thigh roll: 12.27
+thigh pitch75.07
+	Time (s): 271.74
+Roll Angle: 9.54
+Pitch Angle: 78.41
+Bytes received: 
+ Calf roll: 2.95
+Calf pitch-3.45
+	Time (s): 272.74
+Roll Angle: 9.32
+Pitch Angle: 78.52
+Bytes received: 
+ Calf roll: 2.67
+Calf pitch-3.49
+	Time (s): 273.74
+Roll Angle: 9.60
+Pitch Angle: 78.56
+Bytes received: 
+ Thigh roll: 12.24
+thigh pitch75.06
+	Time (s): 274.74
+Roll Angle: 9.57
+Pitch Angle: 78.56
+Bytes received: 
+ Calf roll: 2.95
+Calf pitch-3.52
+	Time (s): 275.74
+Roll Angle: 9.29
+Pitch Angle: 78.59
+Bytes received: 
+ Thigh roll: 12.23
+thigh pitch75.08
+	Time (s): 276.74
+Roll Angle: 9.27
+Pitch Angle: 78.60
+Bytes received: 
+ Calf roll: 2.93
+Calf pitch-3.50
+	Time (s): 277.74
+Roll Angle: 9.30
+Pitch Angle: 78.58
+Bytes received: 
+ Calf roll: 2.56
+Calf pitch-3.30
+	Time (s): 278.74
+Roll Angle: 9.67
+Pitch Angle: 78.38
+Bytes received: 
+ Calf roll: 2.80
+Calf pitch-3.53
+	Time (s): 279.74
+Roll Angle: 9.43
+Pitch Angle: 78.61
+Bytes received: 
+ Thigh roll: 12.25
+thigh pitch75.04
+	Time (s): 280.74
+Roll Angle: 9.45
+Pitch Angle: 78.57
+Bytes received: 
+ Calf roll: 2.86
+Calf pitch-3.42
+	Time (s): 281.74
+Roll Angle: 9.39
+Pitch Angle: 78.46
+Bytes received: 
+ Calf roll: 2.83
+Calf pitch-3.40
+	Time (s): 282.74
+Roll Angle: 9.42
+Pitch Angle: 78.45
+Bytes received: 
+ Thigh roll: 12.26
+thigh pitch75.04
+	Time (s): 283.74
+Roll Angle: 9.43
+Pitch Angle: 78.44
+Bytes received: 
+ Calf roll: 2.83
+Calf pitch-3.40
+	Time (s): 284.74
+Roll Angle: 9.43
+Pitch Angle: 78.44
+Bytes received: 
+ Thigh roll: 12.26
+thigh pitch75.04
+	Time (s): 285.74
+Roll Angle: 9.43
+Pitch Angle: 78.44
+Bytes received: 
+ Calf roll: 3.23
+Calf pitch-3.58
+	Time (s): 286.74
+Roll Angle: 9.04
+Pitch Angle: 78.61
+Bytes received: 
+ Thigh roll: 12.30
+thigh pitch75.01
+	Time (s): 287.74
+Roll Angle: 9.08
+Pitch Angle: 78.59
+Bytes received: 
+ Calf roll: 3.72
+Calf pitch-3.72
+	Time (s): 288.74
+Roll Angle: 8.59
+Pitch Angle: 78.73
+Bytes received: 
+ Thigh roll: 12.05
+thigh pitch75.16
+	Time (s): 289.74
+Roll Angle: 8.33
+Pitch Angle: 78.88
+Bytes received: 
+ Calf roll: 3.72
+Calf pitch-3.72
+	Time (s): 290.74
+Roll Angle: 8.33
+Pitch Angle: 78.88
+Bytes received: 
+ Calf roll: 3.15
+Calf pitch-3.85
+	Time (s): 291.74
+Roll Angle: 8.90
+Pitch Angle: 79.01
+Bytes received: 
+ Thigh roll: 11.95
+thigh pitch75.25
+	Time (s): 292.74
+Roll Angle: 8.80
+Pitch Angle: 79.10
+Bytes received: 
+ Calf roll: 2.76
+Calf pitch-3.74
+	Time (s): 293.74
+Roll Angle: 9.19
+Pitch Angle: 78.99
+Bytes received: 
+ Thigh roll: 11.94
+thigh pitch75.21
+	Time (s): 294.74
+Roll Angle: 9.18
+Pitch Angle: 78.95
+Bytes received: 
+ Calf roll: 2.76
+Calf pitch-3.74
+	Time (s): 295.74
+Roll Angle: 9.18
+Pitch Angle: 78.95
+Bytes received: 
+ Thigh roll: 11.91
+thigh pitch75.25
+	Time (s): 296.74
+Roll Angle: 9.16
+Pitch Angle: 78.99
+Bytes received: 
+ Calf roll: 3.09
+Calf pitch-3.67
+	Time (s): 297.74
+Roll Angle: 8.83
+Pitch Angle: 78.92
+Bytes received: 
+ Thigh roll: 11.91
+thigh pitch75.25
+	Time (s): 298.74
+Roll Angle: 8.83
+Pitch Angle: 78.92
+Bytes received: 
+ Calf roll: 2.93
+Calf pitch-3.57
+	Time (s): 299.74
+Roll Angle: 8.99
+Pitch Angle: 78.83
+Bytes received: 
+ Thigh roll: 11.88
+thigh pitch75.29
+	Time (s): 300.74
+Roll Angle: 8.96
+Pitch Angle: 78.86
+Bytes received: 
+ Calf roll: 2.93
+Calf pitch-3.57
+	Time (s): 301.74
+Roll Angle: 8.96
+Pitch Angle: 78.86
+Bytes received: 
+ Calf roll: 2.93
+Calf pitch-3.46
+	Time (s): 302.74
+Roll Angle: 8.96
+Pitch Angle: 78.75
+Bytes received: 
+ Thigh roll: 11.87
+thigh pitch75.30
+	Time (s): 303.74
+Roll Angle: 8.94
+Pitch Angle: 78.76
+Bytes received: 
+ Calf roll: 2.94
+Calf pitch-3.67
+	Time (s): 304.74
+Roll Angle: 8.93
+Pitch Angle: 78.96
+Bytes received: 
+ Thigh roll: 11.84
+thigh pitch75.33
+	Time (s): 305.74
+Roll Angle: 8.90
+Pitch Angle: 78.99
+Bytes received: 
+ Calf roll: 2.94
+Calf pitch-3.67
+	Time (s): 306.74
+Roll Angle: 8.90
+Pitch Angle: 78.99
+Bytes received: 
+ Calf roll: 2.92
+Calf pitch-3.54
+	Time (s): 307.74
+Roll Angle: 8.91
+Pitch Angle: 78.87
+Bytes received: 
+ Thigh roll: 11.83
+thigh pitch75.33
+	Time (s): 308.74
+Roll Angle: 8.91
+Pitch Angle: 78.87
+Bytes received: 
+ Calf roll: 2.92
+Calf pitch-3.54
+	Time (s): 309.74
+Roll Angle: 8.91
+Pitch Angle: 78.87
+Bytes received: 
+ Thigh roll: 11.85
+thigh pitch75.31
+	Time (s): 310.74
+Roll Angle: 8.92
+Pitch Angle: 78.85
+Bytes received: 
+ Calf roll: 2.91
+Calf pitch-3.56
+	Time (s): 311.74
+Roll Angle: 8.93
+Pitch Angle: 78.88
+Bytes received: 
+ Calf roll: 2.85
+Calf pitch-3.58
+	Time (s): 312.74
+Roll Angle: 9.00
+Pitch Angle: 78.89
+Bytes received: 
+ Thigh roll: 11.85
+thigh pitch75.31
+	Time (s): 313.74
+Roll Angle: 9.00
+Pitch Angle: 78.89
+Bytes received: 
+ Calf roll: 2.85
+Calf pitch-3.59
+	Time (s): 314.74
+Roll Angle: 9.00
+Pitch Angle: 78.91
