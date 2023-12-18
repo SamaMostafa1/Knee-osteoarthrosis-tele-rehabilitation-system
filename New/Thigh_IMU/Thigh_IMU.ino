@@ -7,33 +7,23 @@ Adafruit_MPU6050 mpu;
 // REPLACE WITH YOUR RECEIVER MAC Address
 uint8_t broadcastAddress[] = {0xF4, 0x12, 0xFA, 0xCE, 0xF4, 0xA4};
 
-// struct Calibration
-// {
-//   char cal_acc_x;
-//   char cal_acc_y;
-//   char cal_acc_z;
-//   char cal_gyr_x;
-//   char cal_gyr_y;
-//   char cal_gyr_z;
-// };
-
 typedef struct Calibration
 {
-  char cal_acc_x;
-  char cal_acc_y;
-  char cal_acc_z;
-  char cal_gyr_x;
-  char cal_gyr_y;
-  char cal_gyr_z;
+  float cal_acc_x;
+  float cal_acc_y;
+  float cal_acc_z;
+  float cal_gyr_x;
+  float cal_gyr_y;
+  float cal_gyr_z;
 } Calibration;
 
 // Create an object from Calibration
-Calibration calib_mpu = {-0.28, -0.09, -0.13, +0.05, +0, +0};
+Calibration calib_mpu = {-0.37, +0.02, -0.2, +0.02, -0.02, +0.0};
 
 float         last_x_angle = 0;  // These are the filtered angles
 float         last_y_angle = 0;
 float         last_z_angle = 0;  
-unsigned long last_read_time = millis(); 
+unsigned long last_read_time = millis();
 
 void set_last_read_angle_data(unsigned long time,float x, float y, float z)
 {
@@ -106,11 +96,10 @@ void setup()
       delay(10);
     }
   }
-  
   mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
   mpu.setGyroRange(MPU6050_RANGE_500_DEG);
   mpu.setFilterBandwidth(MPU6050_BAND_5_HZ);
-  delay(100);
+  delay(10);
 }
  
 void loop()
@@ -122,13 +111,6 @@ void loop()
 
   // Send accelerometer and gyro data to ESP32 #2
   // On the sender side (ESP32 #1), send data as a comma-separated string
-  // float ax=a.acceleration.x;
-  // float ay=a.acceleration.y;
-  // float az=a.acceleration.z;
-
-  // float gx = g.gyro.x;
-  // float gy = g.gyro.y;
-  // float gz = g.gyro.z;
 
   // Calibrating the sensor
   float ax = a.acceleration.x + calib_mpu.cal_acc_x;
@@ -140,7 +122,7 @@ void loop()
   float gz = g.gyro.z + calib_mpu.cal_gyr_z;
 
   // Compute the (filtered) gyro angles
-  float dt =(t_now - last_read_time)/1000.0;
+  float dt = (t_now - last_read_time)/1000.0;
   float gyro_angle_x = gx*dt + last_x_angle;
   float gyro_angle_y = gy*dt + last_y_angle;
   float gyro_angle_z = gz*dt + last_z_angle;
@@ -184,5 +166,5 @@ void loop()
   {
     Serial.println("Error sending the data");
   }
-  delay(200);
+  delay(10);
 }

@@ -8,7 +8,8 @@ bool header_flag = true;
 
 // Structure example to receive data
 // Must match the sender structure
-typedef struct struct_message {
+typedef struct struct_message
+{
     char esp_no[1];
     float Roll;
     float Pitch;
@@ -23,7 +24,8 @@ float pitch_2 = 0;
 // Create a struct_message called myData
 struct_message myData;
 
-void setup() {
+void setup()
+{
   // Initialize Serial Monitor
   Serial.begin(115200);
   startTime = millis();
@@ -90,7 +92,9 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len)
   Serial.print(",");
   Serial.println(pitch_2);
 
-  delay(1000);
+  delay(10);
 }
 void loop()
-{}
+{
+  
+}

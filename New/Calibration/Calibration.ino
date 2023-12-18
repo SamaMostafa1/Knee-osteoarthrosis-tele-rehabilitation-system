@@ -4,16 +4,16 @@ Adafruit_MPU6050 mpu;
 
 typedef struct Calibration
 {
-  char cal_acc_x;
-  char cal_acc_y;
-  char cal_acc_z;
-  char cal_gyr_x;
-  char cal_gyr_y;
-  char cal_gyr_z;
+  float cal_acc_x;
+  float cal_acc_y;
+  float cal_acc_z;
+  float cal_gyr_x;
+  float cal_gyr_y;
+  float cal_gyr_z;
 } Calibration;
 
 // Create an object from Calibration
-Calibration calib_mpu = {-0.28, -0.09, -0.13, +0.05, +0, +0};
+Calibration calib_mpu = {-0.37, +0.02, -0.2, +0.02, -0.02, +0.0};
 
 void setup()
 {
@@ -41,22 +41,22 @@ void loop()
   sensors_event_t a, g,temp;
   mpu.getEvent(&a, &g, &temp);
 
-  // float ax=a.acceleration.x;
-  // float ay=a.acceleration.y;
-  // float az=a.acceleration.z;
+  float ax=a.acceleration.x;
+  float ay=a.acceleration.y;
+  float az=a.acceleration.z;
 
-  // float gx = g.gyro.x;
-  // float gy = g.gyro.y;
-  // float gz = g.gyro.z;
+  float gx = g.gyro.x;
+  float gy = g.gyro.y;
+  float gz = g.gyro.z;
 
-  // Calibrating the sensor
-  float ax = a.acceleration.x + calib_mpu.cal_acc_x;
-  float ay = a.acceleration.y + calib_mpu.cal_acc_y;
-  float az = a.acceleration.z + calib_mpu.cal_acc_z;
+  //Calibrating the sensor
+  // float ax = a.acceleration.x + calib_mpu.cal_acc_x;
+  // float ay = a.acceleration.y + calib_mpu.cal_acc_y;
+  // float az = a.acceleration.z + calib_mpu.cal_acc_z;
 
-  float gx = g.gyro.x + calib_mpu.cal_gyr_x;
-  float gy = g.gyro.y + calib_mpu.cal_gyr_y;
-  float gz = g.gyro.z + calib_mpu.cal_gyr_z;
+  // float gx = g.gyro.x + calib_mpu.cal_gyr_x;
+  // float gy = g.gyro.y + calib_mpu.cal_gyr_y;
+  // float gz = g.gyro.z + calib_mpu.cal_gyr_z;
 
   Serial.print("Acc_x: ");
   Serial.println(ax);
@@ -66,10 +66,13 @@ void loop()
   Serial.println(az);
   Serial.print("Gyr_x: ");
   Serial.println(gx);
+  //Serial.println(calib_mpu.cal_gyr_x);
   Serial.print("Gyr_y: ");
   Serial.println(gy);
+  //Serial.println(calib_mpu.cal_gyr_y);
   Serial.print("Gyr_z: ");
   Serial.println(gz);
+  //Serial.println(calib_mpu.cal_gyr_z);
   
-  delay(200);
+  delay(1000);
 }
