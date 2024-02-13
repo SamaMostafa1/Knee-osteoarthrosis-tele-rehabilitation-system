@@ -1,5 +1,7 @@
 #include <esp_now.h>
 #include <WiFi.h>
+// #include <ESP8266WiFi.h>
+// #include <espnow.h>
 #include <Adafruit_MPU6050.h>
 #include <Adafruit_Sensor.h>
 Adafruit_MPU6050 mpu;
@@ -33,12 +35,13 @@ void set_last_read_angle_data(unsigned long time,float x, float y, float z)
   last_z_angle = z;
 }
 
-// Structure example to send data
-// Must match the receiver structure
 typedef struct struct_message
 {
   char esp_no[1];
-  float Roll;
+  float gyr_x;
+  float gyr_y;
+  float acc_x;
+  float acc_y;
   float Pitch;
 } struct_message;
 
@@ -84,8 +87,6 @@ void setup()
     Serial.println("Failed to add peer");
     return;
   }
-  while (!Serial)
-    delay(10); // will pause Zero, Leonardo, etc until serial console opens
 
   // Try to initialize!
   if (!mpu.begin())
@@ -152,8 +153,12 @@ void loop()
 
   // Set values to send
   strcpy(myData.esp_no, "T");
-  myData.Roll = angle_x;
+  //myData.Roll = angle_x;
   myData.Pitch = angle_y;
+  myData.acc_x = ax;
+  myData.acc_y = ay;
+  myData.gyr_x = gx;
+  myData.gyr_y = gy;
   
   // Send message via ESP-NOW
   esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &myData, sizeof(myData));
