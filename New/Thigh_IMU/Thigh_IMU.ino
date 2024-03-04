@@ -53,14 +53,15 @@ esp_now_peer_info_t peerInfo;
 // callback when data is sent
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status)
 {
-  Serial.print("\r\nLast Packet Send Status:\t");
-  Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
+  //Serial.print("\r\nLast Packet Send Status:\t");
+  //Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
 }
  
 void setup()
 {
   // Init Serial Monitor
-  Serial.begin(115200);
+  //Serial.begin(115200);
+  Serial.begin(500000);
  
   // Set device as a Wi-Fi Station
   WiFi.mode(WIFI_STA);
@@ -68,7 +69,7 @@ void setup()
   // Init ESP-NOW
   if (esp_now_init() != ESP_OK)
   {
-    Serial.println("Error initializing ESP-NOW");
+    //Serial.println("Error initializing ESP-NOW");
     return;
   }
 
@@ -84,14 +85,14 @@ void setup()
   // Add peer        
   if (esp_now_add_peer(&peerInfo) != ESP_OK)
   {
-    Serial.println("Failed to add peer");
+    //Serial.println("Failed to add peer");
     return;
   }
 
   // Try to initialize!
   if (!mpu.begin())
   {
-    Serial.println("Failed to find MPU6050 chip");
+    //Serial.println("Failed to find MPU6050 chip");
     while (1)
     {
       delay(10);
@@ -146,10 +147,10 @@ void loop()
   float angle_z = 0;
   set_last_read_angle_data(t_now, angle_x, angle_y, angle_z);
 
-  Serial.println("Sent sensor data");
+  //Serial.println("Sent sensor data");
 
-  Serial.println(angle_x);
-  Serial.println(angle_y);
+  //Serial.println(angle_x);
+  //Serial.println(angle_y);
 
   // Set values to send
   strcpy(myData.esp_no, "T");
@@ -165,11 +166,11 @@ void loop()
    
   if (result == ESP_OK)
   {
-    Serial.println("Sent with success");
+    //Serial.println("Sent with success");
   }
   else
   {
-    Serial.println("Error sending the data");
+    //Serial.println("Error sending the data");
   }
   delay(10);
 }

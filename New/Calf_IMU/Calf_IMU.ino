@@ -39,7 +39,10 @@ void set_last_read_angle_data(unsigned long time,float x, float y, float z)
 typedef struct struct_message
 {
   char esp_no[1];
-  float Roll;
+  float gyr_x;
+  float gyr_y;
+  float acc_x;
+  float acc_y;
   float Pitch;
 } struct_message;
 
@@ -51,14 +54,15 @@ esp_now_peer_info_t peerInfo;
 // callback when data is sent
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status)
 {
-  Serial.print("\r\nLast Packet Send Status:\t");
-  Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
+  //Serial.print("\r\nLast Packet Send Status:\t");
+  //Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
 }
  
 void setup()
 {
   // Init Serial Monitor
-  Serial.begin(115200);
+  //Serial.begin(115200);
+  Serial.begin(500000);
  
   // Set device as a Wi-Fi Station
   WiFi.mode(WIFI_STA);
@@ -66,7 +70,7 @@ void setup()
   // Init ESP-NOW
   if (esp_now_init() != ESP_OK)
   {
-    Serial.println("Error initializing ESP-NOW");
+    //Serial.println("Error initializing ESP-NOW");
     return;
   }
 
@@ -82,17 +86,16 @@ void setup()
   // Add peer        
   if (esp_now_add_peer(&peerInfo) != ESP_OK)
   {
-    Serial.println("Failed to add peer");
+    //Serial.println("Failed to add peer");
     return;
   }
-  while (!Serial)
-    delay(10); // will pause Zero, Leonardo, etc until serial console opens
 
   // Try to initialize!
   if (!mpu.begin())
   {
-    Serial.println("Failed to find MPU6050 chip");
-    while (1) {
+    //Serial.println("Failed to find MPU6050 chip");
+    while (1)
+    {
       delay(10);
     }
   }
@@ -100,7 +103,7 @@ void setup()
   mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
   mpu.setGyroRange(MPU6050_RANGE_500_DEG);
   mpu.setFilterBandwidth(MPU6050_BAND_5_HZ);
-  delay(100);
+  delay(10);
 }
  
 void loop()
@@ -120,7 +123,7 @@ void loop()
 
   float gx = g.gyro.x + calib_mpu.cal_gyr_x;
   float gy = g.gyro.y + calib_mpu.cal_gyr_y;
-  float gz = g.gyro.z + calib_mpu.cal_gyr_z;  
+  float gz = g.gyro.z + calib_mpu.cal_gyr_z;
 
   // Compute the (filtered) gyro angles
   float dt =(t_now - last_read_time)/1000.0;
@@ -146,26 +149,29 @@ void loop()
   float angle_z = 0;
   set_last_read_angle_data(t_now, angle_x, angle_y, angle_z);
 
-  Serial.println("Sent sensor data");
+  //Serial.println("Sent sensor data");
 
-  Serial.println(angle_x);
-  Serial.println(angle_y);
+  //Serial.println(angle_x);
+  //Serial.println(angle_y);
 
   // Set values to send
   strcpy(myData.esp_no, "C");
-  myData.Roll = angle_x;
   myData.Pitch = angle_y;
+  myData.acc_x = ax;
+  myData.acc_y = ay;
+  myData.gyr_x = gx;
+  myData.gyr_y = gy;
   
   // Send message via ESP-NOW
   esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &myData, sizeof(myData));
    
   if (result == ESP_OK)
   {
-    Serial.println("Sent with success");
+    //Serial.println("Sent with success");
   }
   else
   {
-    Serial.println("Error sending the data");
+    //Serial.println("Error sending the data");
   }
   delay(10);
 }

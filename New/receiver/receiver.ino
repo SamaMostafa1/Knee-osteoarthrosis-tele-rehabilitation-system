@@ -10,16 +10,26 @@ bool header_flag = true;
 // Must match the sender structure
 typedef struct struct_message
 {
-    char esp_no[1];
-    float Roll;
-    float Pitch;
+  char esp_no[1];
+  float gyr_x;
+  float gyr_y;
+  float acc_x;
+  float acc_y;
+  float Pitch;
 } struct_message;
-
-float roll_1 = 0;
-float roll_2 = 0;
 
 float pitch_1 = 0;
 float pitch_2 = 0;
+
+float acc_x_T = 0;
+float acc_y_T = 0;
+float gyr_x_T = 0;
+float gyr_y_T = 0;
+
+float acc_x_C = 0;
+float acc_y_C = 0;
+float gyr_x_C = 0;
+float gyr_y_C = 0;
 
 // Create a struct_message called myData
 struct_message myData;
@@ -27,7 +37,9 @@ struct_message myData;
 void setup()
 {
   // Initialize Serial Monitor
-  Serial.begin(115200);
+  //Serial.begin(115200);
+  Serial.begin(500000);
+  
   startTime = millis();
   // Set device as a Wi-Fi Station
   WiFi.mode(WIFI_STA);
@@ -47,17 +59,23 @@ void setup()
 void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len)
 {
   memcpy(&myData, incomingData, sizeof(myData));
-  //Serial.print("Bytes received: \n ");
+  
   if(myData.esp_no[0] == 'T')
   {
-    roll_1 = myData.Roll;
     pitch_1 = myData.Pitch;
+    acc_x_T = myData.acc_x;
+    acc_y_T = myData.acc_y;
+    gyr_x_T = myData.gyr_x;
+    gyr_y_T = myData.gyr_y;
     elapsedTime_1 =( (millis() - startTime) / 1000.0);
   }
   else
   {
-    roll_2 = myData.Roll;
     pitch_2 = myData.Pitch;
+    acc_x_C = myData.acc_x;
+    acc_y_C = myData.acc_y;
+    gyr_x_C = myData.gyr_x;
+    gyr_y_C = myData.gyr_y;
     double elapsedTime_2 =( (millis() - startTime) / 1000.0);
   }
 
@@ -70,11 +88,23 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len)
     Serial.print(",");
     Serial.print("Knee Angle");
     Serial.print(",");
-    Serial.print("Thigh Roll");
+    Serial.print("Acc_x_T");
+    Serial.print(",");
+    Serial.print("Acc_y_T");
+    Serial.print(",");
+    Serial.print("Gyr_x_T");
+    Serial.print(",");
+    Serial.print("Gyr_y_T");
+    Serial.print(",");
+    Serial.print("Acc_x_C");
+    Serial.print(",");
+    Serial.print("Acc_y_C");
+    Serial.print(",");
+    Serial.print("Gyr_x_C");
+    Serial.print(",");
+    Serial.print("Gyr_y_C");
     Serial.print(",");
     Serial.print("Thigh Pitch");
-    Serial.print(",");
-    Serial.print("Calf Roll");
     Serial.print(",");
     Serial.println("Calf Pitch");
     header_flag = false;
@@ -83,12 +113,23 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len)
   Serial.print(elapsedTime_1);
   Serial.print(",");
   Serial.print(pitch_1 - pitch_2);
+  Serial.print(acc_x_T);
   Serial.print(",");
-  Serial.print(roll_1);
+  Serial.print(acc_y_T);
+  Serial.print(",");
+  Serial.print(gyr_x_T);
+  Serial.print(",");
+  Serial.print(gyr_y_T);
+  Serial.print(",");
+  Serial.print(acc_x_C);
+  Serial.print(",");
+  Serial.print(acc_y_C);
+  Serial.print(",");
+  Serial.print(gyr_x_C);
+  Serial.print(",");
+  Serial.print(gyr_y_C);
   Serial.print(",");
   Serial.print(pitch_1);
-  Serial.print(",");
-  Serial.print(roll_2);
   Serial.print(",");
   Serial.println(pitch_2);
 
