@@ -42,14 +42,44 @@ void setup()
   //Serial.begin(921600);
   Serial.begin(2000000);
   startTime = millis();
+
   // Set device as a Wi-Fi Station
   WiFi.mode(WIFI_STA);
+
   // Init ESP-NOW
   if (esp_now_init() != ESP_OK)
   {
     Serial.println("Error initializing ESP-NOW");
     return;
   }
+
+  /*
+   * Prints for the Headers for the CSV file
+   */
+  Serial.println("");
+  Serial.print("Time");
+  Serial.print(",");
+  Serial.println("Knee Angle");
+  // Serial.print(",");
+  // Serial.print("Acc_x_T");
+  // Serial.print(",");
+  // Serial.print("Acc_y_T");
+  // Serial.print(",");
+  // Serial.print("Gyr_x_T");
+  // Serial.print(",");
+  // Serial.print("Gyr_y_T");
+  // Serial.print(",");
+  // Serial.print("Acc_x_C");
+  // Serial.print(",");
+  // Serial.print("Acc_y_C");
+  // Serial.print(",");
+  // Serial.print("Gyr_x_C");
+  // Serial.print(",");
+  // Serial.print("Gyr_y_C");
+  // Serial.print(",");
+  // Serial.print("Thigh Pitch");
+  // Serial.print(",");
+  // Serial.println("Calf Pitch");
   
   // Once ESPNow is successfully Init, we will register for recv CB to
   // get recv packer info
@@ -59,6 +89,7 @@ void setup()
 // callback function that will be executed when data is received
 void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len)
 {
+  elapsedTime_1 = ( (millis() - startTime) / 1000.0);
   memcpy(&myData, incomingData, sizeof(myData));
   
   if(myData.esp_no[0] == 'T')
@@ -68,7 +99,6 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len)
     acc_y_T = myData.acc_y;
     gyr_x_T = myData.gyr_x;
     gyr_y_T = myData.gyr_y;
-    elapsedTime_1 =( (millis() - startTime) / 1000.0);
   }
   else
   {
@@ -77,39 +107,38 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len)
     acc_y_C = myData.acc_y;
     gyr_x_C = myData.gyr_x;
     gyr_y_C = myData.gyr_y;
-    double elapsedTime_2 =( (millis() - startTime) / 1000.0);
   }
 
   /*
    * Prints for the Headers for the CSV file
    */
-  if(header_flag == true)
-  {
-    Serial.print("Time");
-    Serial.print(",");
-    Serial.println("Knee Angle");
-    // Serial.print(",");
-    // Serial.print("Acc_x_T");
-    // Serial.print(",");
-    // Serial.print("Acc_y_T");
-    // Serial.print(",");
-    // Serial.print("Gyr_x_T");
-    // Serial.print(",");
-    // Serial.print("Gyr_y_T");
-    // Serial.print(",");
-    // Serial.print("Acc_x_C");
-    // Serial.print(",");
-    // Serial.print("Acc_y_C");
-    // Serial.print(",");
-    // Serial.print("Gyr_x_C");
-    // Serial.print(",");
-    // Serial.print("Gyr_y_C");
-    // Serial.print(",");
-    // Serial.print("Thigh Pitch");
-    // Serial.print(",");
-    // Serial.println("Calf Pitch");
-    header_flag = false;
-  }
+  // if(header_flag == true)
+  // {
+  //   Serial.print("Time");
+  //   Serial.print(",");
+  //   Serial.println("Knee Angle");
+  //   // Serial.print(",");
+  //   // Serial.print("Acc_x_T");
+  //   // Serial.print(",");
+  //   // Serial.print("Acc_y_T");
+  //   // Serial.print(",");
+  //   // Serial.print("Gyr_x_T");
+  //   // Serial.print(",");
+  //   // Serial.print("Gyr_y_T");
+  //   // Serial.print(",");
+  //   // Serial.print("Acc_x_C");
+  //   // Serial.print(",");
+  //   // Serial.print("Acc_y_C");
+  //   // Serial.print(",");
+  //   // Serial.print("Gyr_x_C");
+  //   // Serial.print(",");
+  //   // Serial.print("Gyr_y_C");
+  //   // Serial.print(",");
+  //   // Serial.print("Thigh Pitch");
+  //   // Serial.print(",");
+  //   // Serial.println("Calf Pitch");
+  //   header_flag = false;
+  // }
 
   Serial.print(elapsedTime_1);
   Serial.print(",");

@@ -2,7 +2,7 @@
 #include <WiFi.h>
 #include <Adafruit_MPU6050.h>
 #include <Adafruit_Sensor.h>
-#define PI  3.14
+#define PI 3.14
 Adafruit_MPU6050 mpu;
 
 // Receiver MAC Address
@@ -21,19 +21,6 @@ typedef struct Calibration
 // Create an object from Calibration
 Calibration calib_mpu = {-0.47, +0.14, +0.9, +0.04, +0, -0.01};
 
-float         last_x_angle=0;  // These are the filtered angles
-float         last_y_angle=0;
-float         last_z_angle=0;  
-unsigned long last_read_time=millis(); 
-
-void set_last_read_angle_data(unsigned long time,float x, float y, float z)
-{
-  last_read_time = time;
-  last_x_angle = x;
-  last_y_angle = y;
-  last_z_angle = z;
-}
-
 // Structure example to send data
 // Must match the receiver structure
 typedef struct struct_message
@@ -51,70 +38,78 @@ struct_message myData;
 
 esp_now_peer_info_t peerInfo;
 
+// Kalman filter variables
+float Q_ANGLE = 0.001f;
+float Q_BIAS = 0.003f;
+float R_MEASURE = 0.03f;
+float angle = 0.0f;
+float bias = 0.0f;
+float rate = 0.0f;
+float P[2][2] = {{0.0f, 0.0f}, {0.0f, 0.0f}};
+unsigned long last_read_time = millis();  // Move the variable here
+
 // callback when data is sent
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status)
 {
-  //Serial.print("\r\nLast Packet Send Status:\t");
-  //Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
+  // Serial.print("\r\nLast Packet Send Status:\t");
+  // Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
 }
- 
+
+
+
 void setup()
 {
   // Init Serial Monitor
-  //Serial.begin(115200);
-  //Serial.begin(500000);
-  Serial.begin(921600);
- 
+  // Serial.begin(115200);
+  Serial.begin(500000);
+
   // Set device as a Wi-Fi Station
   WiFi.mode(WIFI_STA);
 
   // Init ESP-NOW
   if (esp_now_init() != ESP_OK)
   {
-    //Serial.println("Error initializing ESP-NOW");
+    // Serial.println("Error initializing ESP-NOW");
     return;
   }
 
   // Once ESPNow is successfully Init, we will register for Send CB to
-  // get the status of Trasnmitted packet
+  // get the status of Transmitted packet
   esp_now_register_send_cb(OnDataSent);
-  
+
   // Register peer
   memcpy(peerInfo.peer_addr, broadcastAddress, 6);
-  peerInfo.channel = 0;  
+  peerInfo.channel = 0;
   peerInfo.encrypt = false;
-  
-  // Add peer        
+
+  // Add peer
   if (esp_now_add_peer(&peerInfo) != ESP_OK)
   {
-    //Serial.println("Failed to add peer");
+    // Serial.println("Failed to add peer");
     return;
   }
 
   // Try to initialize!
   if (!mpu.begin())
   {
-    //Serial.println("Failed to find MPU6050 chip");
+    // Serial.println("Failed to find MPU6050 chip");
     while (1)
     {
       delay(10);
     }
   }
+
   mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
   mpu.setGyroRange(MPU6050_RANGE_500_DEG);
   mpu.setFilterBandwidth(MPU6050_BAND_5_HZ);
-  //delay(10);
 }
- 
+
 void loop()
 {
   // Get sensor readings from MPU6050
   unsigned long t_now = millis();
-  sensors_event_t a, g,temp;
+  sensors_event_t a, g, temp;
   mpu.getEvent(&a, &g, &temp);
-
-  // Send accelerometer and gyro data to ESP32 #2
-  // On the sender side (ESP32 #1), send data as a comma-separated string
 
   // Calibrating the sensor
   float ax = a.acceleration.x + calib_mpu.cal_acc_x;
@@ -125,53 +120,52 @@ void loop()
   float gy = g.gyro.y + calib_mpu.cal_gyr_y;
   float gz = g.gyro.z + calib_mpu.cal_gyr_z;
 
-  // Compute the (filtered) gyro angles
-  float dt = (t_now - last_read_time)/1000.0;
-  float gyro_angle_x = gx*dt + last_x_angle;
-  float gyro_angle_y = gy*dt + last_y_angle;
-  float gyro_angle_z = gz*dt + last_z_angle;
-
-  float roll_1 = atan(ay/sqrt(ax *ax + az * az));
-  float pitch_1 = atan(-ax/ sqrt(ay * ay + az * az));
-  
-  float pitch = 0;
-  float roll = 0;
-
-  roll = (roll_1*180) / PI;
-  pitch = (pitch_1*180) / PI;
-
-  // Apply the complementary filter to figure out the change in angle - choice of alpha is
-  // estimated now.
-  // Alpha depends on the sampling rate ...
-  float alpha = 0.96;
-  float angle_x = alpha*gyro_angle_x + (1.0 - alpha)*roll;
-  float angle_y = alpha*gyro_angle_y + (1.0 - alpha)*pitch;
-  float angle_z = 0;
-  set_last_read_angle_data(t_now, angle_x, angle_y, angle_z);
-
-  //Serial.println("Sent sensor data");
-
-  //Serial.println(angle_x);
-  //Serial.println(angle_y);
+  // Apply the Kalman filter to figure out the change in angle
+  kalmanFilter(atan2(-ax, az), gy, (t_now - last_read_time) / 1000.0);
 
   // Set values to send
   strcpy(myData.esp_no, "C");
-  myData.Pitch = angle_y;
+  myData.Pitch = angle*180.0 / PI;
   myData.acc_x = ax;
   myData.acc_y = ay;
   myData.gyr_x = gx;
   myData.gyr_y = gy;
-  
+
   // Send message via ESP-NOW
-  esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &myData, sizeof(myData));
-   
-  if (result == ESP_OK)
-  {
-    //Serial.println("Sent with success");
-  }
-  else
-  {
-    //Serial.println("Error sending the data");
-  }
+  esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *)&myData, sizeof(myData));
+
+  // Update the last_read_time variable
+  last_read_time = t_now;
+
   delay(1);
+}
+
+void kalmanFilter(float newAngle, float newRate, float dt)
+{
+  float S;
+  float K[2];
+  float y;
+
+  // Time Update ("Predict")
+  rate = newRate - bias;
+  angle += dt * rate;
+
+  P[0][0] += dt * (dt * P[1][1] - P[0][1] - P[1][0] + Q_ANGLE);
+  P[0][1] -= dt * P[1][1];
+  P[1][0] -= dt * P[1][1];
+  P[1][1] += Q_BIAS * dt;
+
+  // Measurement Update ("Correct")
+  S = P[0][0] + R_MEASURE;
+  K[0] = P[0][0] / S;
+  K[1] = P[1][0] / S;
+
+  y = newAngle - angle;
+  angle += K[0] * y;
+  bias += K[1] * y;
+
+  P[0][0] -= K[0] * P[0][0];
+  P[0][1] -= K[0] * P[0][1];
+  P[1][0] -= K[1] * P[0][0];
+  P[1][1] -= K[1] * P[0][1];
 }

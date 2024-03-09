@@ -1,10 +1,38 @@
 #include <esp_now.h>
 #include <WiFi.h>
-// #include <ESP8266WiFi.h>
-// #include <espnow.h>
 #include <Adafruit_MPU6050.h>
 #include <Adafruit_Sensor.h>
 Adafruit_MPU6050 mpu;
+
+/******************************** Variables ***************************************/
+float ax = 0;
+float ay = 0;
+float az = 0;
+
+float gx = 0;
+float gy = 0;
+float gz = 0;
+
+float dt = 0;
+float gyro_angle_x = 0;
+float gyro_angle_y = 0;
+float gyro_angle_z = 0;
+
+float roll_1 = 0;
+float pitch_1 = 0;
+
+float pitch = 0;
+float roll = 0;
+
+float         last_x_angle = 0;  // These are the filtered angles
+float         last_y_angle = 0;
+float         last_z_angle = 0;  
+unsigned long last_read_time = millis();
+
+float angle_z = 0;
+float alpha = 0.96;
+float angle_x = 0;
+float angle_y = 0;
 
 // REPLACE WITH YOUR RECEIVER MAC Address
 uint8_t broadcastAddress[] = {0xF4, 0x12, 0xFA, 0xCE, 0xF4, 0xA4};
@@ -21,11 +49,6 @@ typedef struct Calibration
 
 // Create an object from Calibration
 Calibration calib_mpu = {-0.37, +0.02, -0.2, +0.02, -0.02, +0.0};
-
-float         last_x_angle = 0;  // These are the filtered angles
-float         last_y_angle = 0;
-float         last_z_angle = 0;  
-unsigned long last_read_time = millis();
 
 void set_last_read_angle_data(unsigned long time,float x, float y, float z)
 {
@@ -61,7 +84,8 @@ void setup()
 {
   // Init Serial Monitor
   //Serial.begin(115200);
-  Serial.begin(500000);
+  // Serial.begin(500000);
+  Serial.begin(921600);
  
   // Set device as a Wi-Fi Station
   WiFi.mode(WIFI_STA);
@@ -101,7 +125,7 @@ void setup()
   mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
   mpu.setGyroRange(MPU6050_RANGE_500_DEG);
   mpu.setFilterBandwidth(MPU6050_BAND_5_HZ);
-  delay(10);
+  //delay(10);
 }
  
 void loop()
@@ -115,25 +139,22 @@ void loop()
   // On the sender side (ESP32 #1), send data as a comma-separated string
 
   // Calibrating the sensor
-  float ax = a.acceleration.x + calib_mpu.cal_acc_x;
-  float ay = a.acceleration.y + calib_mpu.cal_acc_y;
-  float az = a.acceleration.z + calib_mpu.cal_acc_z;
+  ax = a.acceleration.x + calib_mpu.cal_acc_x;
+  ay = a.acceleration.y + calib_mpu.cal_acc_y;
+  az = a.acceleration.z + calib_mpu.cal_acc_z;
 
-  float gx = g.gyro.x + calib_mpu.cal_gyr_x;
-  float gy = g.gyro.y + calib_mpu.cal_gyr_y;
-  float gz = g.gyro.z + calib_mpu.cal_gyr_z;
+  gx = g.gyro.x + calib_mpu.cal_gyr_x;
+  gy = g.gyro.y + calib_mpu.cal_gyr_y;
+  gz = g.gyro.z + calib_mpu.cal_gyr_z;
 
   // Compute the (filtered) gyro angles
-  float dt = (t_now - last_read_time)/1000.0;
-  float gyro_angle_x = gx*dt + last_x_angle;
-  float gyro_angle_y = gy*dt + last_y_angle;
-  float gyro_angle_z = gz*dt + last_z_angle;
+  dt = (t_now - last_read_time)/1000.0;
+  gyro_angle_x = gx*dt + last_x_angle;
+  gyro_angle_y = gy*dt + last_y_angle;
+  gyro_angle_z = gz*dt + last_z_angle;
 
-  float roll_1 = atan(ay/sqrt(ax *ax + az * az));
-  float pitch_1 = atan(-ax/ sqrt(ay * ay + az * az));
-
-  float pitch = 0;
-  float roll = 0;
+  roll_1 = atan(ay/sqrt(ax *ax + az * az));
+  pitch_1 = atan(-ax/ sqrt(ay * ay + az * az));
 
   roll = (roll_1*180)/3.14;
   pitch = (pitch_1*180)/3.14;
@@ -141,10 +162,9 @@ void loop()
   // Apply the complementary filter to figure out the change in angle - choice of alpha is
   // estimated now.
   // Alpha depends on the sampling rate ...
-  float alpha = 0.96;
-  float angle_x = alpha*gyro_angle_x + (1.0 - alpha)*roll;
-  float angle_y = alpha*gyro_angle_y + (1.0 - alpha)*pitch;
-  float angle_z = 0;
+  angle_x = alpha*gyro_angle_x + (1.0 - alpha)*roll;
+  angle_y = alpha*gyro_angle_y + (1.0 - alpha)*pitch;
+
   set_last_read_angle_data(t_now, angle_x, angle_y, angle_z);
 
   //Serial.println("Sent sensor data");
@@ -164,13 +184,13 @@ void loop()
   // Send message via ESP-NOW
   esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &myData, sizeof(myData));
    
-  if (result == ESP_OK)
-  {
-    //Serial.println("Sent with success");
-  }
-  else
-  {
-    //Serial.println("Error sending the data");
-  }
-  delay(10);
+  // if (result == ESP_OK)
+  // {
+  //   //Serial.println("Sent with success");
+  // }
+  // else
+  // {
+  //   //Serial.println("Error sending the data");
+  // }
+  delay(1);
 }
