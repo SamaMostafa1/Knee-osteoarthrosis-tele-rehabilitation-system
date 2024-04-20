@@ -187,25 +187,26 @@ class _LoginPageState extends State<LoginPage> {
 
                 //google + apple button
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    //google buttom
-                    SquareTile(
-                      onTap: () => AuthService().signInWithGoogle(),
-                      imagePath: 'lib/icons/google.svg',
-                      height: 70,
-                    ),
-
-                    SizedBox(width: 20),
-                    // apple buttom
-                    SquareTile(
-                      onTap: () {},
-                      imagePath: 'lib/icons/Vector.svg',
-                      height: 70,
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     //google buttom
+                //     // SquareTile(
+                //     //
+                //     //   onTap: () => AuthService().signInWithGoogle(),
+                //     //   imagePath: 'lib/icons/google.svg',
+                //     //   height: 70,
+                //     // ),
+                //
+                //     // SizedBox(width: 20),
+                //     // apple buttom
+                //     // SquareTile(
+                //     //   onTap: () {},
+                //     //   imagePath: 'lib/icons/Vector.svg',
+                //     //   height: 70,
+                //     // ),
+                //   ],
+                // ),
                 const SizedBox(
                   height: 40,
                 ),

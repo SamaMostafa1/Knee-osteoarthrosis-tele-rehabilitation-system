@@ -132,20 +132,20 @@ class _RegisterPageState extends State<RegisterPage> {
                       Expanded(
                         child: Divider(
                           thickness: 0.5,
-                          color: Colors.grey.shade400,
+                          color: Colors.black,
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 8, right: 8),
                         child: Text(
                           'OR',
-                          style: TextStyle(color: Colors.grey.shade600),
+                          style: TextStyle(color: Colors.black),
                         ),
                       ),
                       Expanded(
                         child: Divider(
                           thickness: 0.5,
-                          color: Colors.grey.shade400,
+                          color: Colors.black,
                         ),
                       ),
                     ],
@@ -155,28 +155,28 @@ class _RegisterPageState extends State<RegisterPage> {
 
                 //google + apple button
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    //google buttom
-                    SquareTile(
-                      onTap: () => AuthService().signInWithGoogle(),
-                      imagePath: 'lib/icons/google.svg',
-                      height: 70,
-                    ),
-
-                    SizedBox(width: 20),
-                    // apple buttom
-                    SquareTile(
-                      onTap: () {},
-                      imagePath: 'lib/icons/apple.svg',
-                      height: 70,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 100,
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     //google buttom
+                //     SquareTile(
+                //       onTap: () => AuthService().signInWithGoogle(),
+                //       imagePath: 'lib/icons/google.svg',
+                //       height: 70,
+                //     ),
+                //
+                //     SizedBox(width: 20),
+                //     // apple buttom
+                //     SquareTile(
+                //       onTap: () {},
+                //       imagePath: 'lib/icons/apple.svg',
+                //       height: 70,
+                //     ),
+                //   ],
+                // ),
+                // const SizedBox(
+                //   height: 100,
+                // ),
 
                 // not a memeber ? register now
 
@@ -185,14 +185,14 @@ class _RegisterPageState extends State<RegisterPage> {
                   children: [
                     Text(
                       'Already have an account? ',
-                      style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                      style: TextStyle(color: Colors.black, fontSize: 12),
                     ),
                     GestureDetector(
                       onTap: widget.onTap,
                       child: Text(
                         'Login now',
                         style: TextStyle(
-                            color: Colors.blue[900],
+                            color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 14),
                       ),
