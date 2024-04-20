@@ -1,0 +1,155 @@
+{
+  "project_info": {
+    "project_number": "501118538168",
+    "firebase_url": "https://monitor-fc64a-default-rtdb.firebaseio.com",
+    "project_id": "monitor-fc64a",
+    "storage_bucket": "monitor-fc64a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501118538168:android:0840756ca89a68de9e3f4d",
+        "android_client_info": {
+          "package_name": "com.example.ecg_monitor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501118538168-c57q5afdnjrf474clar903gdsd2opilb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASEDaqwzVjKSWzPLYgDAp2lAXlqRxHHbU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501118538168-c57q5afdnjrf474clar903gdsd2opilb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "501118538168-2otieqb31gjktc9qlh7pm5dpaciuu8rn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.smartIcuMonitor"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501118538168:android:1c9506529484876a9e3f4d",
+        "android_client_info": {
+          "package_name": "com.example.modern_login"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501118538168-c57q5afdnjrf474clar903gdsd2opilb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASEDaqwzVjKSWzPLYgDAp2lAXlqRxHHbU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501118538168-c57q5afdnjrf474clar903gdsd2opilb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "501118538168-2otieqb31gjktc9qlh7pm5dpaciuu8rn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.smartIcuMonitor"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501118538168:android:bd1d2e4ae1bafe9b9e3f4d",
+        "android_client_info": {
+          "package_name": "com.example.monitor2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501118538168-c57q5afdnjrf474clar903gdsd2opilb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASEDaqwzVjKSWzPLYgDAp2lAXlqRxHHbU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501118538168-c57q5afdnjrf474clar903gdsd2opilb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "501118538168-2otieqb31gjktc9qlh7pm5dpaciuu8rn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.smartIcuMonitor"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501118538168:android:1c9348fcc70ac02b9e3f4d",
+        "android_client_info": {
+          "package_name": "com.example.smart_icu_monitor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501118538168-c57q5afdnjrf474clar903gdsd2opilb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASEDaqwzVjKSWzPLYgDAp2lAXlqRxHHbU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501118538168-c57q5afdnjrf474clar903gdsd2opilb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "501118538168-2otieqb31gjktc9qlh7pm5dpaciuu8rn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.smartIcuMonitor"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
