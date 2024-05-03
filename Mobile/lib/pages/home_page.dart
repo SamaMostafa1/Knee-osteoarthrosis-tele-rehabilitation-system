@@ -249,6 +249,15 @@ class _HomePageState extends State<HomePage> {
 
   List<String> fieldTitles = ['Name', 'Age', 'Weight', 'Length'];
   var flag=0;
+
+  bool showFields = false;
+  bool showSave = false;
+  void toggleFieldsVisibility() {
+    setState(() {
+      showFields = !showFields;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -285,6 +294,12 @@ class _HomePageState extends State<HomePage> {
     );
 
     dbRef.child(user.uid).set(userinfo.toJson()).then((_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Data written successfully!"),
+          backgroundColor: Colors.green,
+        ),
+      );
       print("Data written successfully!");
     }).catchError((error) {
       print("Error writing data: $error");
@@ -304,7 +319,6 @@ class _HomePageState extends State<HomePage> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Center(
               child: Padding(
@@ -312,78 +326,91 @@ class _HomePageState extends State<HomePage> {
                 child: Text("Logged IN as: ${user.email}"),
               ),
             ),
-            for (int i = 0; i < fieldTitles.length; i++)
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TextField(style: TextStyle(color: Colors.white),
-                  keyboardType: i != 0 ? TextInputType.number : TextInputType.text,
-                  controller: i == 0
-                      ? _textFieldController1
-                      : i == 1
-                      ? _textFieldController2
-                      : i == 2
-                      ? _textFieldController3
-                      : _textFieldController4,
-                  maxLength: i ==0?21 : i==1?3 : i==2?3 : 3,
-                  onChanged: i ==1?(value) {
-                    flag=0;
-                    if (int.tryParse(value) != null) {
-                      int lengthValue = int.parse(value);
-                      if (lengthValue > 130) {
-                        flag =1;
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Maximum value allowed is 130'),
-                          ),
-                        ); // Set the value to 300 if it's greater
+
+            if(showFields)
+              for (int i = 0; i < fieldTitles.length; i++)
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: TextField(style: TextStyle(color: Colors.white),
+                    keyboardType: i != 0 ? TextInputType.number : TextInputType.text,
+                    controller: i == 0
+                        ? _textFieldController1
+                        : i == 1
+                        ? _textFieldController2
+                        : i == 2
+                        ? _textFieldController3
+                        : _textFieldController4,
+                    maxLength: i ==0?21 : i==1?3 : i==2?3 : 3,
+                    onChanged: i ==1?(value) {
+                      flag=0;
+                      if (int.tryParse(value) != null) {
+                        int lengthValue = int.parse(value);
+                        if (lengthValue > 130) {
+                          flag =1;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Maximum value allowed is 130'),
+                            ),
+                          ); // Set the value to 300 if it's greater
+                        }
                       }
                     }
-                  }
-                  :i==2?(value) {
-                    flag=0;
-                    if (int.tryParse(value) != null) {
-                      int lengthValue = int.parse(value);
-                      if (lengthValue > 500) {
-                        flag =1;
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Maximum value allowed is 500'),
-                          ),
-                        ); // Set the value to 300 if it's greater
+                    :i==2?(value) {
+                      flag=0;
+                      if (int.tryParse(value) != null) {
+                        int lengthValue = int.parse(value);
+                        if (lengthValue > 500) {
+                          flag =1;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Maximum value allowed is 500'),
+                            ),
+                          ); // Set the value to 300 if it's greater
+                        }
                       }
                     }
-                  }
-                  :(value) {
-                    flag=0;
-                    if (int.tryParse(value) != null) {
-                      int lengthValue = int.parse(value);
-                      if (lengthValue > 300) {
-                        flag =1;
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Maximum value allowed is 300'),
-                          ),
-                        ); // Set the value to 300 if it's greater
+                    :(value) {
+                      flag=0;
+                      if (int.tryParse(value) != null) {
+                        int lengthValue = int.parse(value);
+                        if (lengthValue > 300) {
+                          flag =1;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Maximum value allowed is 300'),
+                            ),
+                          ); // Set the value to 300 if it's greater
+                        }
                       }
-                    }
-                  },
-
-
-
-                  decoration: InputDecoration(
-                    hintText: 'Enter ${fieldTitles[i]}',
-                    labelText: fieldTitles[i],labelStyle: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20)
+                    },
+                    decoration: InputDecoration(
+                      hintText: 'Enter ${fieldTitles[i]}',
+                      labelText: fieldTitles[i],labelStyle: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20)
+                    ),
                   ),
                 ),
-              ),
-            ElevatedButton(
-              onPressed: () {
-                flag ==0 ?writeData():1;
-
-              },
-              child: Text('Write Data to Firebase'),
+            Row(
+              children: [
+                if (showFields) // Only show the "Save" button if showFields is true
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        flag == 0 ? writeData() : 1;
+                      },
+                      child: Text('Save'),
+                    ),
+                  ),
+                SizedBox(width: 5), // Adding spacing between buttons
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: toggleFieldsVisibility,
+                    child: Text(showFields ? 'Done' : 'Personal Information'),
+                  ),
+                ),
+              ],
             ),
           ],
+
         ),
       ),
       backgroundColor: Colors.blueAccent,
