@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:modern_login/pages/Splash.dart';
 import 'package:modern_login/pages/auth_page.dart';
 import 'package:modern_login/pages/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AuthPage(),
+      home: Splash(),
     );
   }
 }
