@@ -13,8 +13,14 @@ typedef struct struct_message
   char esp_no[1];
   float gyr_x;
   float gyr_y;
+
+  float gyr_z; // Added gyro z-axis
+
   float acc_x;
   float acc_y;
+
+  float acc_z; // Added accelerometer z-axis
+
   float Pitch;
 } struct_message;
 
@@ -23,13 +29,20 @@ float pitch_2 = 0;
 
 float acc_x_T = 0;
 float acc_y_T = 0;
+float acc_z_T = 0; // Added accelerometer z-axis
 float gyr_x_T = 0;
 float gyr_y_T = 0;
+float gyr_z_T = 0; // Added gyro z-axis
 
 float acc_x_C = 0;
 float acc_y_C = 0;
+
+float acc_z_C = 0; // Added accelerometer z-axis
+
 float gyr_x_C = 0;
 float gyr_y_C = 0;
+
+float gyr_z_C = 0; // Added gyro z-axis
 
 // Create a struct_message called myData
 struct_message myData;
@@ -59,24 +72,33 @@ void setup()
   Serial.println("");
   Serial.print("Time");
   Serial.print(",");
-  Serial.println("Knee Angle");
-  // Serial.print(",");
-  // Serial.print("Acc_x_T");
-  // Serial.print(",");
-  // Serial.print("Acc_y_T");
-  // Serial.print(",");
-  // Serial.print("Gyr_x_T");
-  // Serial.print(",");
-  // Serial.print("Gyr_y_T");
-  // Serial.print(",");
-  // Serial.print("Acc_x_C");
-  // Serial.print(",");
-  // Serial.print("Acc_y_C");
-  // Serial.print(",");
-  // Serial.print("Gyr_x_C");
-  // Serial.print(",");
-  // Serial.print("Gyr_y_C");
-  // Serial.print(",");
+  Serial.print("Knee Angle");
+  Serial.print(",");
+  Serial.print("Acc_x_T");
+  Serial.print(",");
+  Serial.print("Acc_y_T");
+  Serial.print(","); 
+  Serial.print("Acc_z_T"); // Added accelerometer z-axis
+  Serial.print(",");
+  Serial.print("Gyr_x_T");
+  Serial.print(",");
+  Serial.print("Gyr_y_T");
+  Serial.print(",");
+  Serial.print("Gyr_z_T"); // Added gyro z-axis
+  Serial.print(",");
+  Serial.print("Acc_x_C");
+  Serial.print(",");
+  Serial.print("Acc_y_C");
+  Serial.print(",");
+  Serial.print("Acc_z_C"); // Added accelerometer z-axis
+  Serial.print(",");
+  Serial.print("Gyr_x_C");
+  Serial.print(",");
+  Serial.print("Gyr_y_C");
+  Serial.print(",");
+  Serial.print("Gyr_z_C"); // Added gyro z-axis
+  Serial.println(",");
+
   // Serial.print("Thigh Pitch");
   // Serial.print(",");
   // Serial.println("Calf Pitch");
@@ -97,16 +119,20 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len)
     pitch_1 = myData.Pitch;
     acc_x_T = myData.acc_x;
     acc_y_T = myData.acc_y;
+    acc_z_T = myData.acc_z; // Added accelerometer z-axis
     gyr_x_T = myData.gyr_x;
     gyr_y_T = myData.gyr_y;
+    gyr_z_T = myData.gyr_z; // Added gyro z-axis
   }
   else
   {
     pitch_2 = myData.Pitch;
     acc_x_C = myData.acc_x;
     acc_y_C = myData.acc_y;
+    acc_z_C = myData.acc_z; // Added accelerometer z-axis
     gyr_x_C = myData.gyr_x;
     gyr_y_C = myData.gyr_y;
+    gyr_z_C = myData.gyr_z; // Added gyro z-axis
   }
 
   /*
@@ -142,27 +168,35 @@ void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len)
 
   Serial.print(elapsedTime_1);
   Serial.print(",");
-  Serial.println(pitch_1 - pitch_2);
-  // Serial.print(",");
-  // Serial.print(acc_x_T);
-  // Serial.print(",");
-  // Serial.print(acc_y_T);
-  // Serial.print(",");
-  // Serial.print(gyr_x_T);
-  // Serial.print(",");
-  // Serial.print(gyr_y_T);
-  // Serial.print(",");
-  // Serial.print(acc_x_C);
-  // Serial.print(",");
-  // Serial.print(acc_y_C);
-  // Serial.print(",");
-  // Serial.print(gyr_x_C);
-  // Serial.print(",");
-  // Serial.print(gyr_y_C);
-  // Serial.print(",");
-  // Serial.print(pitch_1);
-  // Serial.print(",");
-  // Serial.println(pitch_2);
+  Serial.print(pitch_1 - pitch_2);
+  Serial.print(",");
+  Serial.print(acc_x_T);
+  Serial.print(",");
+  Serial.print(acc_y_T);
+  Serial.print(",");
+  Serial.print(acc_z_T); // Added accelerometer z-axis
+  Serial.print(",");
+  Serial.print(gyr_x_T);
+  Serial.print(",");
+  Serial.print(gyr_y_T);
+  Serial.print(",");
+  Serial.print(gyr_z_T); // Added gyro z-axis
+  Serial.print(",");
+  Serial.print(acc_x_C);
+  Serial.print(",");
+  Serial.print(acc_y_C);
+  Serial.print(",");
+  Serial.print(acc_z_C); // Added accelerometer z-axis
+  Serial.print(",");
+  Serial.print(gyr_x_C);
+  Serial.print(",");
+  Serial.print(gyr_y_C);
+  Serial.print(",");
+  Serial.print(gyr_z_C); // Added gyro z-axis
+  Serial.print(",");
+  Serial.print(pitch_1);
+  Serial.print(",");
+  Serial.println(pitch_2);
 
   //delay(10);
 }

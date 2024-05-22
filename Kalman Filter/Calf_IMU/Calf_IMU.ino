@@ -28,8 +28,14 @@ typedef struct struct_message
   char esp_no[1];
   float gyr_x;
   float gyr_y;
+
+  float gyr_z;
+
   float acc_x;
   float acc_y;
+
+  float acc_z;
+
   float Pitch;
 } struct_message;
 
@@ -128,8 +134,17 @@ void loop()
   myData.Pitch = angle*180.0 / PI;
   myData.acc_x = ax;
   myData.acc_y = ay;
+ 
+  myData.acc_z =  az;
+
   myData.gyr_x = gx;
   myData.gyr_y = gy;
+
+  myData.gyr_z = gz;
+
+  // Serial.println(myData.Pitch);
+
+
 
   // Send message via ESP-NOW
   esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *)&myData, sizeof(myData));
