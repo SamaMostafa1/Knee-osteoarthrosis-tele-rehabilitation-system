@@ -105,7 +105,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(vertical: 1.0, horizontal: 15.0), // Adjust padding as needed
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(80.0),       // الشكل وانت مش دايس على تيكست فيلد
+                          borderRadius: BorderRadius.circular(80.0),       // الشكل وانت مش دايس على تيكست فيلد نن
                           borderSide: BorderSide(color: Colors.grey.shade400),
                         ),
                         focusedBorder: OutlineInputBorder(
