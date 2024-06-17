@@ -68,6 +68,14 @@ flutter:
   assets:
     - lib/icons/
     - assets/Knee.PNG
+    - assets/profile.jpg
+    - assets/instructions.jpg
+    - assets/Analysis.png
+    - assets/data.png
+    - assets/exercises.png
+    - assets/knee_animation.jpg
+    - assets/Calf.png
+    - assets/Thigh.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
