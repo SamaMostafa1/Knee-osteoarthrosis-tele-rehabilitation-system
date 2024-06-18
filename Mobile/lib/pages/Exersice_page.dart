@@ -139,37 +139,39 @@ class RotatingLeg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        Positioned(height: 700,right: -18,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Transform.rotate(
-                angle: (-angle) *
-                    (3.14159265359 / 180), // Convert degrees to radians
-                alignment: Alignment.topRight,
-                origin: Offset(-rotationOrigin.dx,
-                    -rotationOrigin.dy), // Adjust rotation origin
-                child: Image.asset('assets/Calf.png'),
-              ),
-              Image.asset('assets/Thigh.png'),
-            ],
+    return OrientationBuilder(
+      builder:(context, orientation) =>  Stack(
+        fit: StackFit.expand,
+        children: [
+          Positioned(height:orientation==Orientation.portrait? 700:75,right: -18,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Transform.rotate(
+                  angle: (-angle) *
+                      (3.14159265359 / 180), // Convert degrees to radians
+                  alignment: Alignment.topRight,
+                  origin: Offset(-rotationOrigin.dx,
+                      -rotationOrigin.dy), // Adjust rotation origin
+                  child: Image.asset('assets/Calf.png'),
+                ),
+                Image.asset('assets/Thigh.png'),
+              ],
+            ),
           ),
-        ),
-        Positioned(
-          right: 65,
-          top: 315,
-          child: const Icon(Icons.circle, size: 80),
-        ),
-        Positioned(
-          right: 85,
-          top: 335,
-          child: Text(angle.toStringAsFixed(0) + "°",
-              style: const TextStyle(color: Colors.white, fontSize: 25)),
-        ),
-      ],
+          Positioned(
+            right:orientation==Orientation.portrait?  65:62 ,
+            top:orientation==Orientation.portrait?  315:3,
+            child: const Icon(Icons.circle, size: 80,color: Colors.black),
+          ),
+          Positioned(
+            right:orientation==Orientation.portrait? 85:82,
+            top:orientation==Orientation.portrait? 335:20,
+            child: Text(angle.toStringAsFixed(0) + "°",
+                style: const TextStyle(color: Colors.white, fontSize: 25)),
+          ),
+        ],
+      ),
     );
   }
 }
