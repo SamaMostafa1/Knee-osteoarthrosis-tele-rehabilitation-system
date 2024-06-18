@@ -31,13 +31,12 @@ class _ExercisePageState extends State<ExercisePage> {
   double angle = 0; // Initialize angle
   int score = 0; // Initialize score counter
   static const maxScore = 2; // Maximum score for full progress
-  late ConfettiController _confettiController;
+  final ConfettiController _confettiController = ConfettiController(duration: const Duration(seconds: 1));
 
   @override
   void initState() {
     super.initState();
-    _confettiController =
-        ConfettiController(duration: const Duration(seconds: 1));
+
     // Listen to changes in Firebase Realtime Database
     FirebaseDatabase.instance
         .reference()
@@ -160,13 +159,13 @@ class RotatingLeg extends StatelessWidget {
           ),
         ),
         Positioned(
-          left: 220,
-          bottom: 300,
+          right: 65,
+          top: 315,
           child: const Icon(Icons.circle, size: 80),
         ),
         Positioned(
-          left: 245,
-          bottom: 323,
+          right: 85,
+          top: 335,
           child: Text(angle.toStringAsFixed(0) + "°",
               style: const TextStyle(color: Colors.white, fontSize: 25)),
         ),
