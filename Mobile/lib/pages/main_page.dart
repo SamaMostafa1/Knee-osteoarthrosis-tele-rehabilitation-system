@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'package:modern_login/pages/Exersice_page.dart';
+import 'package:modern_login/pages/Edit_profile.dart';
+import 'package:modern_login/pages/home_page.dart';
 
 class MainPage extends StatelessWidget {
   //const MainPage({super.key});
@@ -26,9 +31,36 @@ class MainPage extends StatelessWidget {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
 
+    void _showDialog(BuildContext context) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Confirm Action'),
+            content: Text('Are you sure you want to exit the application?'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: Text('Yes'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  SystemNavigator.pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Scaffold(
         body: Container(
-      //color: Colors.white,
+      color: Colors.white,
       height: height,
       width: width,
       child: Column(
@@ -37,77 +69,93 @@ class MainPage extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.blue[900],
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(70),
-                bottomRight: Radius.circular(70),
+                bottomLeft: Radius.circular(50),
+                bottomRight: Radius.circular(50),
               ),
             ),
             height: height * 0.2,
             width: width,
-            child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: 10,
-                      right: 10,
-                      left: 10,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          onTap: () {},
-                          child: Icon(
-                            Icons.sort,
-                            color: Colors.white,
-                            size: 40,
-                          ),
+            child:
+                //Column(children: [
+                // Padding(
+                //   padding: EdgeInsets.only(
+                //     //top: 10,
+                //     //right: 10,
+                //     //left: 10,
+                //   ),
+                //   child:
+                Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // InkWell(
+                //   onTap: () {},
+                //   child: Icon(
+                //     Icons.sort,
+                //     color: Colors.white,
+                //     size: 40,
+                //   ),
+                // ),
+                Container(
+                  margin: EdgeInsets.only(
+                    left: 0.4 * width,
+                    //bottom: 0.11 * height,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    //crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Hi",
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1,
                         ),
-                        Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                            image: DecorationImage(
-                              image: AssetImage('assets/instructions.jpg'),
-                            ),
-                          ),
+                      ),
+                      //SizedBox(height: 5,),
+                      Text(
+                        "Misara",
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1,
                         ),
-                      ],
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    right: 0.03 * width,
+                    bottom: 0.1 * height,
+                  ),
+                  height: 50,
+                  width: 50,
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () {
+                      _showDialog(context);
+                    },
+                    splashColor: Colors.black12,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          width: 2,
+                          color: Colors.white,
+                        ),
+                        //color: Colors.white,
+                        image: DecorationImage(
+                          image: AssetImage('assets/exit.png'),
+                        ),
+                      ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: 30,
-                      left: 70,
-                      right: 70,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Hi,",
-                          style: TextStyle(
-                            fontSize: 30,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 1,
-                          ),
-                        ),
-                        //SizedBox(height: 5,),
-                        Text(
-                          "Misara",
-                          style: TextStyle(
-                            fontSize: 30,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 1,
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ]),
+                ),
+              ],
+            ),
           ),
           Container(
             decoration: BoxDecoration(
@@ -154,7 +202,11 @@ class MainPage extends StatelessWidget {
                           ),
                           child: InkWell(
                               onTap: () {
-                                print("Hi");
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (context) => HomePage()),
+                                // );
                               },
                               splashColor: Colors.black12,
                               child: Column(
@@ -251,7 +303,12 @@ class MainPage extends StatelessWidget {
                           ),
                           child: InkWell(
                               onTap: () {
-                                print("Hi");
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ExercisePage()),
+                                );
+                                //print("Hi");
                               },
                               splashColor: Colors.black12,
                               child: Column(
