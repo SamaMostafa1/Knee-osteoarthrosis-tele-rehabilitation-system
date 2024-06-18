@@ -25,8 +25,9 @@ class MyApp extends StatelessWidget {
     //return const MaterialApp(
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      //home: Splash(),
-      home: MainPage(),
+      home: Splash(),
+      // home: MainPage(),
     );
   }
 }
+
