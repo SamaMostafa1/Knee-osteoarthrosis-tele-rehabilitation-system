@@ -1,10 +1,12 @@
 #include <esp_now.h>
 #include <WiFi.h>
+#include <esp_wifi.h>
 #include <Adafruit_MPU6050.h>
 #include <Adafruit_Sensor.h>
 #define PI 3.14
-
 Adafruit_MPU6050 mpu;
+
+constexpr char WIFI_SSID[] = "Etisalat-HjHC";
 
 // Receiver MAC Address
 uint8_t broadcastAddress[] = {0xF4, 0x12, 0xFA, 0xCE, 0xF4, 0xA4};
@@ -34,7 +36,6 @@ typedef struct struct_message
   float acc_x;
   float acc_y;
   float acc_z;
-
 
   float Pitch;
 } struct_message;
@@ -66,11 +67,17 @@ void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status)
 void setup()
 {
   // Init Serial Monitor
-  // Serial.begin(115200);
   Serial.begin(500000);
 
   // Set device as a Wi-Fi Station
   WiFi.mode(WIFI_STA);
+
+  int32_t channel = getWiFiChannel(WIFI_SSID);
+
+  // Set Wi-Fi channel
+  esp_wifi_set_promiscuous(true);
+  esp_wifi_set_channel(channel, WIFI_SECOND_CHAN_NONE);
+  esp_wifi_set_promiscuous(false);
 
   // Init ESP-NOW
   if (esp_now_init() != ESP_OK)
@@ -85,7 +92,7 @@ void setup()
 
   // Register peer
   memcpy(peerInfo.peer_addr, broadcastAddress, 6);
-  peerInfo.channel = 0;
+  //peerInfo.channel = 0;
   peerInfo.encrypt = false;
 
   // Add peer
@@ -141,7 +148,7 @@ void loop()
   myData.gyr_y = gy;
   myData.gyr_z = gz;
 
-  Serial.println(myData.Pitch);
+  //Serial.println(myData.Pitch);
 
   // Send message via ESP-NOW
   esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *)&myData, sizeof(myData));
@@ -180,4 +187,15 @@ void kalmanFilter(float newAngle, float newRate, float dt)
   P[0][1] -= K[0] * P[0][1];
   P[1][0] -= K[1] * P[0][0];
   P[1][1] -= K[1] * P[0][1];
+}
+
+int32_t getWiFiChannel(const char *ssid) {
+  if (int32_t n = WiFi.scanNetworks()) {
+      for (uint8_t i=0; i<n; i++) {
+          if (!strcmp(ssid, WiFi.SSID(i).c_str())) {
+              return WiFi.channel(i);
+          }
+      }
+  }
+  return 0;
 }
