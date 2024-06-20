@@ -292,6 +292,7 @@ import 'Exersice_page.dart';
 import 'Splash.dart';
 import '../utils.dart';
 import '../resources/add_data.dart';
+import 'instruction_page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -539,15 +540,28 @@ class _HomePageState extends State<HomePage> {
             //     ),
             //   ],
             // ),
-            const SizedBox(height: 20), // Add some spacing before the button
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ExercisePage()),
-                );
-              },
-              child: Text('Go to Exercise Page'),
+            //const SizedBox(height: 20), // Add some spacing before the button
+            Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ExercisePage()),
+                    );
+                  },
+                  child: Text('Go to Exercise Page'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => OnBoardingPage()),
+                    );
+                  },
+                  child: Text('Go to Instruction Page'),
+                ),
+              ],
             ),
           ],
         ),

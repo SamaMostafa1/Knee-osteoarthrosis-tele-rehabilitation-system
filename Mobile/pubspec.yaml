@@ -44,6 +44,8 @@ dependencies:
   cloud_firestore:
   flare_flutter:
   confetti:
+  introduction_screen:
+  smooth_page_indicator:
 
 dev_dependencies:
   flutter_test:
