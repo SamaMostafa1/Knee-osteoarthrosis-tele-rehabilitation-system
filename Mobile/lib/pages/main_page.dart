@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:modern_login/pages/Exersice_page.dart';
 import 'package:modern_login/pages/Edit_profile.dart';
 import 'package:modern_login/pages/home_page.dart';
+import 'package:modern_login/pages/severity_page.dart';
 
 class MainPage extends StatelessWidget {
   //const MainPage({super.key});
@@ -354,7 +355,11 @@ class MainPage extends StatelessWidget {
                           ),
                           child: InkWell(
                               onTap: () {
-                                print("Hi");
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SeverityPage()),
+                                );
                               },
                               splashColor: Colors.black12,
                               child: Column(
