@@ -7,12 +7,27 @@
 #include "addons/TokenHelper.h"
 //#include <FirebaseESP32.h>
 //#include "addons/RTDPHelper.h"
+#include <ESP32_Supabase.h>
+#include <ArduinoJson.h>
+#include <WiFiUdp.h>
 
-#define WIFI_SSID "Mi Note 10 Lite"
-#define WIFI_PASSWORD "misara246"
+#define WIFI_SSID "Etisalat-HjHC"
+#define WIFI_PASSWORD "missarahmed@246"
 
 #define API_KEY "AIzaSyAmk93YedMEzsH5Srh2NdJYbzAk3lFOS_0"
 #define DATABASE_URL "https://graduation-data-default-rtdb.firebaseio.com/"
+
+// Put your supabase URL and Anon key here...
+String supabase_url = "https://fmszngwfmhnbbwyngztc.supabase.co";
+String anon_key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZtc3puZ3dmbWhuYmJ3eW5nenRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTg4ODI4NDMsImV4cCI6MjAzNDQ1ODg0M30.0YuDgAcCgYtg3aQwpMpjxphTc-AqtwKqtt_VT8qiycc";
+
+Supabase db;
+
+// Put your target table here
+String table = "Grad";
+
+bool upsert = false;
+float x = 0.0;
 
 // Define which core to run each task on
 #define RECEIVER_CORE 0 // Core 0 for receiving data
@@ -93,14 +108,21 @@ void OnDataRecv(const uint8_t *mac, const uint8_t *incomingData, int len)
   }
 }
 
+char buffer[20];
+// UDP setup
+WiFiUDP udp;
+const char* serverIP = "192.168.1.4"; // IP address of the Flutter app's device
+const unsigned int udpPort = 4210;   // Port on which the Flutter app is listening 
+
 // Task to print data
 void printDataTask(void *pvParameters)
 {
-  float x = 0.0;
+  //float x = 0.0;
   for (;;)
   {
-    FirebaseJson json;
-    json.set("fields/temperature/floatValue", ++x);
+    x++;
+    //FirebaseJson json;
+    //json.set("fields/temperature/floatValue", ++x);
     // if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > 500 || sendDataPrevMillis == 0))
     // //if (Firebase.ready() && signupOK)
     // {
@@ -129,8 +151,22 @@ void printDataTask(void *pvParameters)
     Serial.print(",");
     Serial.print(pitch_1 - pitch_2);
     Serial.print(",");
+
+    dtostrf(pitch_1 - pitch_2, 6, 2, buffer);
+
+    // Send the data
+    udp.beginPacket(serverIP, udpPort);
+    udp.write((uint8_t*)buffer, strlen(buffer));
+    udp.endPacket();
+
+    
+    // Create JSON data
+    // String JSON = createJsonData(x);
+    // db.insert(table, JSON, upsert);
+    //delay(10);
+
     //Firebase.RTDB.setFloat(&fbdo, "Try/angle", ++x);
-    Firebase.RTDB.setJSON(&fbdo, "Try/angle" , &json);
+    //Firebase.RTDB.setJSON(&fbdo, "Try/angle" , &json);
     //json.set("Try/angle", ++x);
     Serial.print(acc_x_T);
     Serial.print(",");
@@ -160,6 +196,7 @@ void printDataTask(void *pvParameters)
     // Serial.print(",");
     // Serial.println(pitch_2);
     vTaskDelay(10 / portTICK_PERIOD_MS);
+    delay(5);
   }
 }
 
@@ -190,27 +227,33 @@ void setup()
   // Serial.print("Connected to Wi-Fi channel: ");
   // Serial.println(channel);
 
-  config.api_key = API_KEY;
-  config.database_url = DATABASE_URL;
+  // config.api_key = API_KEY;
+  // config.database_url = DATABASE_URL;
 
-  if (Firebase.signUp(&config, &auth, "", ""))
-  {
-    Serial.println("Authentication successful");
-    signupOK = true;
-  }
-  else
-  {
-    Serial.printf("Authentication failed: %s\n", config.signer.signupError.message.c_str());
-  }
+  // if (Firebase.signUp(&config, &auth, "", ""))
+  // {
+  //   Serial.println("Authentication successful");
+  //   signupOK = true;
+  // }
+  // else
+  // {
+  //   Serial.printf("Authentication failed: %s\n", config.signer.signupError.message.c_str());
+  // }
 
-  config.token_status_callback = tokenStatusCallback;
+  // config.token_status_callback = tokenStatusCallback;
   
-  Firebase.begin(&config, &auth);
-  Firebase.reconnectWiFi(true);
+  // Firebase.begin(&config, &auth);
+  // Firebase.reconnectWiFi(true);
 
-  startTime = millis();
+  //startTime = millis();
 
   //WiFi.mode(WIFI_STA);
+  
+  // Beginning Supabase Connection
+  // db.begin(supabase_url, anon_key);
+
+  // Start UDP
+  udp.begin(udpPort);
 
   if (esp_now_init() != ESP_OK)
   {
@@ -236,4 +279,14 @@ void setup()
 void loop()
 {
   // Empty, because tasks handle everything
+}
+
+String createJsonData(int id) {
+  // Using ArduinoJson to create JSON data
+  StaticJsonDocument<200> doc;
+  doc["Angle"] = id;
+  //doc["reading"] = value;
+  String jsonData;
+  serializeJson(doc, jsonData);
+  return jsonData;
 }

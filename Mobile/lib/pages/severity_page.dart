@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 //import 'package:flutter/services.dart';
 
@@ -11,15 +12,46 @@ class SeverityPage extends StatefulWidget {
 class _SeverityPageState extends State<SeverityPage> {
   var width, height;
 
+  RawDatagramSocket? udpSocket;
+  String? data;
+
   int currentStep = 0;
   bool get isFirstStep => currentStep == 0;
   bool get isLastStep => currentStep == steps().length - 1;
+
+  @override
+  void initState() {
+    super.initState();
+    setupUDP();
+  }
+
+  void setupUDP() async {
+    udpSocket = await RawDatagramSocket.bind(InternetAddress.anyIPv4, 4210);
+    udpSocket!.listen((RawSocketEvent event) {
+      if (event == RawSocketEvent.read) {
+        Datagram datagram = udpSocket!.receive()!;
+        if (datagram != null) {
+          setState(() {
+            data = String.fromCharCodes(datagram.data);
+          });
+          // String message = String.fromCharCodes(datagram.data);
+          // print('Received message: $message');
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    udpSocket?.close();
+    super.dispose();
+  }
 
   List<Step> steps() => [
         Step(
           title: Text('Calibration'),
           content: Column(
-            
+            children: [Text('Received data: $data')],
           ),
           isActive: currentStep >= 0,
           state: currentStep > 0 ? StepState.complete : StepState.indexed,
@@ -63,11 +95,11 @@ class _SeverityPageState extends State<SeverityPage> {
           ),
         ),
       ),
-      body: 
-      Theme(
-        data:ThemeData(
+      body: Theme(
+        data: ThemeData(
           colorScheme: ColorScheme.light(
-            primary: Colors.blue.shade900, // This will change the active step color
+            primary:
+                Colors.blue.shade900, // This will change the active step color
             //secondary: Colors.green, // This will change the text color
           ),
         ),
