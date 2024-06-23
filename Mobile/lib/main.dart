@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:modern_login/pages/Splash.dart';
 import 'package:modern_login/pages/auth_page.dart';
+import 'package:modern_login/pages/instruction_page.dart';
 import 'package:modern_login/pages/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:modern_login/pages/main_page.dart';
@@ -22,11 +23,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
     // return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Splash(),
+      // home: Splash(),
       // home: MainPage(),
+      home: instruction(),
     );
   }
 }
