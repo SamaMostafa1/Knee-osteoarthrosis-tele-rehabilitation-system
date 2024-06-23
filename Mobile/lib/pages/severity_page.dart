@@ -9,8 +9,29 @@ class SeverityPage extends StatefulWidget {
   State<SeverityPage> createState() => _SeverityPageState();
 }
 
+class CircularBuffer<T> {
+  final int capacity;
+  List<T> _buffer;
+
+  CircularBuffer(this.capacity) : _buffer = [];
+
+  void add(T element) {
+    if (_buffer.length == capacity) {
+      _buffer.removeAt(0); // Remove the first element when the buffer is full
+    }
+    _buffer.add(element); // Add the new element
+  }
+
+  List<T> get buffer =>
+      List.unmodifiable(_buffer); // Return an unmodifiable view of the buffer
+
+  @override
+  String toString() => _buffer.toString();
+}
+
 class _SeverityPageState extends State<SeverityPage> {
   var width, height;
+  var buffer = CircularBuffer<int>(5);
 
   RawDatagramSocket? udpSocket;
   String? data;
@@ -22,7 +43,9 @@ class _SeverityPageState extends State<SeverityPage> {
   @override
   void initState() {
     super.initState();
-    setupUDP();
+    buffer.add(10);
+    buffer.add(20);
+    //setupUDP();
   }
 
   void setupUDP() async {
@@ -51,7 +74,16 @@ class _SeverityPageState extends State<SeverityPage> {
         Step(
           title: Text('Calibration'),
           content: Column(
-            children: [Text('Received data: $data')],
+            children: [
+              Text('Received data: $buffer'),
+              Text(
+                  "Here we are going to calibrate the device during standing and sitting before using it."),
+              Text(
+                  "Please wear the device as previously mentioned in the instructions."),
+              Text("Second: "),
+              Text(
+                  "Second: Please wear the device as previously mentioned in the instructions."),
+            ],
           ),
           isActive: currentStep >= 0,
           state: currentStep > 0 ? StepState.complete : StepState.indexed,
@@ -103,40 +135,44 @@ class _SeverityPageState extends State<SeverityPage> {
             //secondary: Colors.green, // This will change the text color
           ),
         ),
-        child: Stepper(
-          type: StepperType.horizontal,
-          steps: steps(),
-          currentStep: currentStep,
-          onStepContinue: () {
-            if (isLastStep) {
-            } else {
-              setState(() => currentStep += 1);
-            }
-          },
-          onStepCancel:
-              isFirstStep ? null : () => setState(() => currentStep -= 1),
-          onStepTapped: (step) => setState(() => currentStep = step),
-          controlsBuilder: (context, details) => Padding(
-              padding: const EdgeInsets.only(top: 32),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      child: Text(isLastStep ? 'Confirm' : 'Next'),
-                      onPressed: details.onStepContinue,
-                    ),
-                  ),
-                  if (!isFirstStep) ...[
-                    const SizedBox(width: 16),
+        child: Padding(
+          padding: EdgeInsets.only(top: height * 0.05),
+          child: Stepper(
+            type: StepperType.horizontal,
+            physics: ClampingScrollPhysics(),
+            steps: steps(),
+            currentStep: currentStep,
+            onStepContinue: () {
+              if (isLastStep) {
+              } else {
+                setState(() => currentStep += 1);
+              }
+            },
+            onStepCancel:
+                isFirstStep ? null : () => setState(() => currentStep -= 1),
+            onStepTapped: (step) => setState(() => currentStep = step),
+            controlsBuilder: (context, details) => Padding(
+                padding: const EdgeInsets.only(top: 32),
+                child: Row(
+                  children: [
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: isFirstStep ? null : details.onStepCancel,
-                        child: const Text('Back'),
+                        child: Text(isLastStep ? 'Confirm' : 'Next'),
+                        onPressed: details.onStepContinue,
                       ),
                     ),
+                    if (!isFirstStep) ...[
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: isFirstStep ? null : details.onStepCancel,
+                          child: const Text('Back'),
+                        ),
+                      ),
+                    ],
                   ],
-                ],
-              )),
+                )),
+          ),
         ),
       ),
     );
