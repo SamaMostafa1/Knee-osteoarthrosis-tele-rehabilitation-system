@@ -48,6 +48,7 @@ dependencies:
   smooth_page_indicator:
   video_player:
   chewie: ^1.3.4
+  percent_indicator:
 
 dev_dependencies:
   flutter_test:
@@ -86,6 +87,8 @@ flutter:
     - assets/troos.png
     - assets/video.jpg
     - assets/Protocol.mp4
+    - assets/troos2.jpg
+    - assets/exrcise.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

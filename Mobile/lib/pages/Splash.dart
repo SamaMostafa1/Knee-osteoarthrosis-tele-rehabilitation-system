@@ -16,63 +16,65 @@ class Splash extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           // user logged in
-          if(snapshot.hasData){
+          if (snapshot.hasData) {
             return HomePage();
           }
-          //user not logged in
-          else{
+          // user not logged in
+          else {
             return Scaffold(
-                body: Container(decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.blue,Colors.black])),
-                  child: SafeArea(
-                    child: Column(
-                      // mainAxisAlignment: MainAxisAlignment.center,
-                      // crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(height: 150),
-                        // Add your image here
-                        ClipOval(
-                          child: Image.asset(
-                            'assets/Knee.PNG',
+              body: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: [Colors.blue, Colors.black]),
+                ),
+                child: SafeArea(
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      bool isPortrait = constraints.maxWidth < constraints.maxHeight;
+                      return Column(
+                        mainAxisAlignment: isPortrait ? MainAxisAlignment.center : MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(height: isPortrait ? 30 : 15),
+                          ClipOval(
+                            child: Image.asset(
+                              'assets/Knee.PNG',
+                              width: isPortrait ? 500 : 360,
+                              height: isPortrait ? 200 : 200,
+                            ),
                           ),
-                        ),
-                        // SizedBox(height: 20), // Optional spacing
-                        // Add other widgets below the image if needed
-                        SizedBox(height: 100),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                // Handle login button press
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => LoginPage()),
-                                );
-                              },
-                              child: Text('Login'),
-                            ),
-                            SizedBox(width: 10), // Adjust the width according to your preference
-                            ElevatedButton(
-                              onPressed: () {
-                                // Handle register button press
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => RegisterPage()),
-                                );
-                              },
-                              child: Text('Register'),
-                            ),
-                          ],
-                        ),
-
-                        SizedBox(height: 20),
-
-
-                      ],
-                    ),
+                          SizedBox(height: isPortrait ? 100 : 20),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => LoginPage()),
+                                  );
+                                },
+                                child: Text('Login'),
+                              ),
+                              SizedBox(width: 10),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => RegisterPage()),
+                                  );
+                                },
+                                child: Text('Register'),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20),
+                        ],
+                      );
+                    },
                   ),
                 ),
-              );
+              ),
+            );
           }
         },
       ),

@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
     // return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // home: Splash(),
+      home: Splash(),
       // home: MainPage(),
       // home: instruction(),
       home: VideoApp(),

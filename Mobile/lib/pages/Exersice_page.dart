@@ -1,8 +1,8 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart'; // Import Firebase Database
+import 'package:firebase_database/firebase_database.dart';
 import 'package:confetti/confetti.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,6 +16,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: const ExercisePage(),
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Colors.white,
+      ),
     );
   }
 }
@@ -28,30 +32,23 @@ class ExercisePage extends StatefulWidget {
 }
 
 class _ExercisePageState extends State<ExercisePage> {
-  double angle = 0; // Initialize angle
-  int score = 0; // Initialize score counter
-  static const maxScore = 2; // Maximum score for full progress
+  double angle = 0;
+  int score = 0;
+  static const maxScore = 2;
   final ConfettiController _confettiController = ConfettiController(duration: const Duration(seconds: 1));
 
   @override
   void initState() {
     super.initState();
-
-    // Listen to changes in Firebase Realtime Database
-    FirebaseDatabase.instance
-        .reference()
-        .child('angles')
-        .onValue
-        .listen((event) {
+    FirebaseDatabase.instance.reference().child('angles').onValue.listen((event) {
       if (event.snapshot.value != null) {
         setState(() {
-          angle = double.tryParse(event.snapshot.value.toString()) ??
-              0; // Convert to double safely
+          angle = double.tryParse(event.snapshot.value.toString()) ?? 0;
           if (angle == 90) {
-            score++; // Increment score if angle is 90
+            score++;
             if (score == maxScore) {
               _confettiController.play();
-              score=0;
+              score = 0;
             }
           }
         });
@@ -67,92 +64,109 @@ class _ExercisePageState extends State<ExercisePage> {
 
   @override
   Widget build(BuildContext context) {
-    double progress =
-    (score / maxScore).clamp(0.0, 1.0); // Calculate progress value
+    double progress = (score / maxScore).clamp(0.0, 1.0);
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Exercise Page'),
+        centerTitle: true,
       ),
-      body: Stack(
-        children: [
-          RotatingLeg(angle: angle, rotationOrigin: Offset(10, -20)),
-          Positioned(
-            top: 20,
-            left: 20,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                SizedBox(
-                  width: 100,
-                  height: 100,
-                  child: CircularProgressIndicator(
-                    value: progress,
-                    strokeWidth: 10,
-                    backgroundColor: Colors.grey[300],
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
-                  ),
+      body: OrientationBuilder(
+        builder: (context, orientation) {
+          double gifHeight = orientation == Orientation.portrait ? height * 0.3 : height * 0.5;
+          double gifWidth = orientation == Orientation.portrait ? width  : width * 0.4;
+
+          return Stack(
+            children: [
+              Positioned(
+                height: gifHeight,
+                width: gifWidth,
+                top: 10,
+                left: (width - gifWidth) / 9,
+                child: Image.asset(
+                  'assets/exrcise.gif',
+                  fit: BoxFit.cover,
                 ),
-                Text(
+              ),
+              RotatingLeg(angle: angle, rotationOrigin: const Offset(10, -20)),
+              Positioned(
+                bottom: 60,
+                left: 30,
+                child: Text(
                   'Score: $score',
                   style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                   textAlign: TextAlign.center,
                 ),
-              ],
-            ),
-          ),
-          Align(
-            alignment: Alignment.topCenter,
-            child: ConfettiWidget(
-              confettiController: _confettiController,
-              emissionFrequency:1 ,
-              numberOfParticles: 20,
-              blastDirection: pi/2 , // upwards
-              blastDirectionality: BlastDirectionality.explosive,
-              shouldLoop: false,
-              gravity: 0.1,
-              colors: const [
-                Colors.red,
-                Colors.blue,
-                Colors.green,
-                Colors.yellow,
-                Colors.purple
-              ], // manually specify the colors to be used
-            ),
-          ),
-        ],
+              ),
+              Align(
+                alignment: Alignment.topCenter,
+                child: ConfettiWidget(
+                  confettiController: _confettiController,
+                  emissionFrequency: 1,
+                  numberOfParticles: 20,
+                  blastDirection: pi / 2,
+                  blastDirectionality: BlastDirectionality.explosive,
+                  shouldLoop: false,
+                  gravity: 0.1,
+                  colors: const [Colors.red, Colors.blue, Colors.green, Colors.yellow, Colors.purple],
+                ),
+              ),
+              Positioned(
+                bottom: 20,
+                left: 20,
+                right: 20,
+                child: Column(
+                  children: [
+                    LinearPercentIndicator(
+                      barRadius: const Radius.circular(10),
+                      lineHeight: 25.0,
+                      percent: progress,
+                      backgroundColor: Colors.grey[300]!,
+                      progressColor: Colors.green,
+                      center: Text(
+                        '${(progress * 100).toStringAsFixed(0)}%',
+                        style: const TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold, color: Colors.black),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
 }
 
 class RotatingLeg extends StatelessWidget {
-  final double angle; // angle in degrees
-  final Offset rotationOrigin; // specific point to rotate around
+  final double angle;
+  final Offset rotationOrigin;
 
-  const RotatingLeg(
-      {Key? key, required this.angle, required this.rotationOrigin})
-      : super(key: key);
+  const RotatingLeg({Key? key, required this.angle, required this.rotationOrigin}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return OrientationBuilder(
-      builder:(context, orientation) =>  Stack(
+      builder: (context, orientation) => Stack(
         fit: StackFit.expand,
         children: [
-          Positioned(height:orientation==Orientation.portrait? 700:75,right: -18,
+          Positioned(
+            height: orientation == Orientation.portrait ? 700 : 75,
+            right: -18,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Transform.rotate(
-                  angle: (-angle) *
-                      (3.14159265359 / 180), // Convert degrees to radians
+                  angle: (-angle) * (pi / 180),
                   alignment: Alignment.topRight,
-                  origin: Offset(-rotationOrigin.dx,
-                      -rotationOrigin.dy), // Adjust rotation origin
+                  origin: Offset(-rotationOrigin.dx, -rotationOrigin.dy),
                   child: Image.asset('assets/Calf.png'),
                 ),
                 Image.asset('assets/Thigh.png'),
@@ -160,15 +174,17 @@ class RotatingLeg extends StatelessWidget {
             ),
           ),
           Positioned(
-            right:orientation==Orientation.portrait?  65:62 ,
-            top:orientation==Orientation.portrait?  315:3,
-            child: const Icon(Icons.circle, size: 80,color: Colors.black),
+            right: orientation == Orientation.portrait ? 65 : 62,
+            top: orientation == Orientation.portrait ? 315 : 3,
+            child: const Icon(Icons.circle, size: 80, color: Colors.black),
           ),
           Positioned(
-            right:orientation==Orientation.portrait? 85:82,
-            top:orientation==Orientation.portrait? 335:20,
-            child: Text(angle.toStringAsFixed(0) + "°",
-                style: const TextStyle(color: Colors.white, fontSize: 25)),
+            right: orientation == Orientation.portrait ? 85 : 82,
+            top: orientation == Orientation.portrait ? 335 : 20,
+            child: Text(
+              '${angle.toStringAsFixed(0)}°',
+              style: const TextStyle(color: Colors.white, fontSize: 25),
+            ),
           ),
         ],
       ),

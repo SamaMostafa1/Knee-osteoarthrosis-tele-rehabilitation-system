@@ -541,27 +541,14 @@ class _HomePageState extends State<HomePage> {
             //   ],
             // ),
             //const SizedBox(height: 20), // Add some spacing before the button
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ExercisePage()),
-                    );
-                  },
-                  child: Text('Go to Exercise Page'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => OnBoardingPage()),
-                    );
-                  },
-                  child: Text('Go to Instruction Page'),
-                ),
-              ],
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ExercisePage()),
+                );
+              },
+              child: Text('Go to Exercise Page'),
             ),
           ],
         ),
