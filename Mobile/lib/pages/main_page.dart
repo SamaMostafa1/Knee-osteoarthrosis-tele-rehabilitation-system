@@ -254,10 +254,10 @@ class MainPage extends StatelessWidget {
                           ),
                           child: InkWell(
                               onTap: () {
-                                                                Navigator.push(
+                                Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SeverityPage()),
+                                      builder: (context) => instruction()),
                                 );
                               },
                               splashColor: Colors.black12,

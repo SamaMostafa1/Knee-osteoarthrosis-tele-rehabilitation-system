@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:modern_login/pages/main_page.dart';
 import 'firebase_options.dart';
 import 'package:flutter/services.dart';
+import 'package:modern_login/pages/video_try.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // home: Splash(),
       // home: MainPage(),
-      home: instruction(),
+      // home: instruction(),
+      home: VideoApp(),
     );
   }
 }
