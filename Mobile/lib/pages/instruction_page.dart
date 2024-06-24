@@ -395,7 +395,7 @@ class instruction extends StatelessWidget {
   var width, height;
 
   List home_imgs = [
-    "assets/troos.png",
+    "assets/troos2.jpg",
     "assets/video.jpg",
   ];
 
