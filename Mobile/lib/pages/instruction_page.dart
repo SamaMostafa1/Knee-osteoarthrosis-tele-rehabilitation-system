@@ -308,6 +308,7 @@ import 'package:video_player/video_player.dart';
 import 'Exersice_page.dart';
 import 'home_page.dart';
 import 'instructions_screen/instruction_page2.dart';
+import 'main_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -466,7 +467,11 @@ class instruction extends StatelessWidget {
                       color: Colors.transparent,
                       child: InkWell(
                         onTap: () {
-                          _showDialog(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MainPage()),
+                          );
                         },
                         splashColor: Colors.black12,
                         child: Container(

@@ -3,8 +3,12 @@ import 'package:flutter/services.dart';
 
 import 'package:modern_login/pages/Exersice_page.dart';
 import 'package:modern_login/pages/Edit_profile.dart';
+import 'package:modern_login/pages/Splash.dart';
 import 'package:modern_login/pages/home_page.dart';
 import 'package:modern_login/pages/severity_page.dart';
+
+import 'instruction_page.dart';
+import 'login_page.dart';
 
 class MainPage extends StatelessWidget {
   //const MainPage({super.key});
@@ -49,8 +53,11 @@ class MainPage extends StatelessWidget {
               TextButton(
                 child: Text('Yes'),
                 onPressed: () {
-                  Navigator.of(context).pop();
-                  SystemNavigator.pop();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => LoginPage()),
+                  );
                 },
               ),
             ],
@@ -106,7 +113,7 @@ class MainPage extends StatelessWidget {
                     //crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "Hi",
+                        "Home",
                         style: TextStyle(
                           fontSize: 30,
                           color: Colors.white,
@@ -116,7 +123,7 @@ class MainPage extends StatelessWidget {
                       ),
                       //SizedBox(height: 5,),
                       Text(
-                        "Misara",
+                        "Page",
                         style: TextStyle(
                           fontSize: 30,
                           color: Colors.white,
@@ -203,11 +210,11 @@ class MainPage extends StatelessWidget {
                           ),
                           child: InkWell(
                               onTap: () {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //       builder: (context) => HomePage()),
-                                // );
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Splash()),
+                                );
                               },
                               splashColor: Colors.black12,
                               child: Column(
@@ -253,7 +260,11 @@ class MainPage extends StatelessWidget {
                           ),
                           child: InkWell(
                               onTap: () {
-                                print("Hi");
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => instruction()),
+                                );
                               },
                               splashColor: Colors.black12,
                               child: Column(

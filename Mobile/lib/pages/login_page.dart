@@ -6,6 +6,7 @@ import 'package:modern_login/components/my_textfield.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modern_login/components/square_tile.dart';
 import 'package:modern_login/pages/Splash.dart';
+import 'package:modern_login/pages/main_page.dart';
 import 'package:modern_login/services/auth_service.dart';
 import 'forget_password.dart';
 
@@ -41,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
       );
       //pop the loading circle
       Navigator.pop(context);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Splash(),));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage(),));
     } on FirebaseAuthException catch (e) {
       //pop the loading circle
       Navigator.pop(context);
