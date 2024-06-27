@@ -35,13 +35,15 @@ class CircularBuffer<T> {
 
 class _SeverityPageState extends State<SeverityPage> {
   var width, height;
-  //var buffer = CircularBuffer<int>(5);
   List buffer = [];
   final int capacity = 5;
 
-  double _opacity = 0.2; // Initial opacity (faded)
-  bool _isLoading = false;
-  bool _isDone = false;
+  double _opacity_2 = 0.2; // Initial opacity (faded)
+  double _opacity_1 = 1; // Initial opacity (faded)
+  bool _isLoading_1 = false;
+  bool _isLoading_2 = false;
+  bool _isDone_1 = false;
+  bool _isDone_2 = false;
 
   late VideoPlayerController _controller;
 
@@ -73,9 +75,15 @@ class _SeverityPageState extends State<SeverityPage> {
     buffer.add(element);
   }
 
-  void _changeOpacity() {
+  void _changeOpacity(int num) {
     setState(() {
-      _opacity = _opacity == 0.2 ? 1.0 : 0.2; // Toggle opacity
+      if (num == 1) {
+        _opacity_1 = _opacity_1 != 1.0 ? 1.0 : 0.2; // Toggle opacity
+        _opacity_2 = _opacity_2 != 1.0 ? 1.0 : 0.2; // Toggle opacity
+      }
+      if (num == 2) {
+        _opacity_2 = _opacity_2 != 1.0 ? 1.0 : 0.2; // Toggle opacity
+      }
     });
   }
 
@@ -95,12 +103,19 @@ class _SeverityPageState extends State<SeverityPage> {
   //   });
   // }
 
-  void _startProcess() {
-    setState(() {
-      _isLoading = true;
-    });
+  void _startProcess(int num) {
+    if (num == 1) {
+      setState(() {
+        _isLoading_1 = true;
+      });
+    }
+    if (num == 2) {
+      setState(() {
+        _isLoading_2 = true;
+      });
+    }
 
-    _receiveDataFromUDPServer().then((_) {
+    _receiveDataFromUDPServer(num).then((_) {
       // setState(() {
       //   _isLoading = false;
       //   //_isDone = true;
@@ -108,7 +123,7 @@ class _SeverityPageState extends State<SeverityPage> {
     });
   }
 
-  Future<void> _receiveDataFromUDPServer() async {
+  Future<void> _receiveDataFromUDPServer(int num) async {
     RawDatagramSocket.bind(InternetAddress.anyIPv4, 4210).then((socket) {
       socket.listen((event) {
         if (event == RawSocketEvent.read) {
@@ -124,12 +139,28 @@ class _SeverityPageState extends State<SeverityPage> {
               int sum =
                   buffer[0] + buffer[1] + buffer[2] + buffer[3] + buffer[4];
               int avg = sum ~/ capacity;
-              if (avg > -10 && avg < 10) {
-                //Future.delayed(Duration(seconds: 10));
-                setState(() {
-                  _isDone = true;
-                  _isLoading = false;
-                });
+              if (num == 1) {
+                if (avg > -5 && avg < 10) {
+                  //Future.delayed(Duration(seconds: 10));
+                  setState(() {
+                    _isDone_1 = true;
+                    _isLoading_1 = false;
+                    _changeOpacity(num);
+                    socket.close();
+                  });
+                }
+              }
+              if (num == 2) {
+                //if (avg > 82 && avg < 95) {
+                if (avg > -5 && avg < 10) {
+                  //Future.delayed(Duration(seconds: 10));
+                  setState(() {
+                    _isDone_2 = true;
+                    _isLoading_2 = false;
+                    _changeOpacity(num);
+                    socket.close();
+                  });
+                }
               }
             }
           }
@@ -147,7 +178,8 @@ class _SeverityPageState extends State<SeverityPage> {
   List<Step> steps() => [
         Step(
           title: Text('Info'),
-          content: Column(children: [
+          content:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             SizedBox(height: height * 0.02),
             Text(
               "1- Here we are going to calibrate the device in 2 positions, standing and sitting.",
@@ -199,38 +231,48 @@ class _SeverityPageState extends State<SeverityPage> {
                 ),
               ),
               Text(
-                "-Once calibration is done an icon wiil appear.",
+                "-Once calibration is done an icon will appear.",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w200,
                 ),
               ),
               SizedBox(height: height * 0.02),
-              Text(
-                "1- Stand Position:",
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.w400,
+              AnimatedOpacity(
+                opacity: _opacity_1,
+                duration: Duration(seconds: 0),
+                child: Text(
+                  "1- Stand Position:",
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ),
               SizedBox(height: height * 0.02),
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                Image.asset(
-                  'assets/stand.png',
-                  width: width * 0.35,
-                  height: height * 0.15,
+                AnimatedOpacity(
+                  opacity: _opacity_1,
+                  duration: Duration(seconds: 0),
+                  child: Image.asset(
+                    'assets/stand.png',
+                    width: width * 0.35,
+                    height: height * 0.15,
+                  ),
                 ),
                 Container(
                   width: 50,
                   height: 50,
-                  child: _isDone
+                  child: _isDone_1
                       ? Image.asset(
                           'assets/Done.png',
                         )
-                      : _isLoading
+                      : _isLoading_1
                           ? CircularProgressIndicator()
                           : IconButton(
-                              onPressed: _startProcess,
+                              onPressed: () {
+                                _startProcess(1);
+                              },
                               icon: Icon(Icons.play_arrow),
                               color: Colors.blue[900],
                               style: ButtonStyle(
@@ -240,45 +282,56 @@ class _SeverityPageState extends State<SeverityPage> {
                 ),
               ]),
               SizedBox(height: height * 0.02),
-              Text(
-                "2- Sit Position:",
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.w400,
+              AnimatedOpacity(
+                opacity: _opacity_2,
+                duration: Duration(seconds: 0),
+                child: Text(
+                  "2- Sit Position:",
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ),
-              AnimatedOpacity(
-                opacity: _opacity,
-                duration: Duration(seconds: 0),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Image.asset(
-                        'assets/sit.png',
-                        width: width * 0.35,
-                        height: height * 0.15,
-                      ),
-                      Container(
-                        width: 50,
-                        height: 50,
-                        child: _isDone
-                            ? Image.asset(
-                                'assets/Done.png',
-                              )
-                            : _isLoading
-                                ? CircularProgressIndicator()
-                                : IconButton(
-                                    onPressed: _startProcess,
-                                    icon: Icon(Icons.play_arrow),
-                                    color: Colors.blue[900],
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Colors.blue[50])),
-                                  ),
-                      ),
-                    ]),
-              ),
+              SizedBox(height: height * 0.02),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                AnimatedOpacity(
+                  opacity: _opacity_2,
+                  duration: Duration(seconds: 0),
+                  child: Image.asset(
+                    'assets/sit.png',
+                    width: width * 0.35,
+                    height: height * 0.15,
+                  ),
+                ),
+                Container(
+                  width: 50,
+                  height: 50,
+                  child: _isDone_2
+                      ? Image.asset(
+                          'assets/Done.png',
+                        )
+                      : _isLoading_2
+                          ? CircularProgressIndicator()
+                          : AnimatedOpacity(
+                              opacity: _opacity_2,
+                              duration: Duration(seconds: 0),
+                              child: IconButton(
+                                onPressed: () {
+                                  if(_isDone_1)
+                                  {
+                                    _startProcess(2);
+                                  }
+                                },
+                                icon: Icon(Icons.play_arrow),
+                                color: Colors.blue[900],
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.blue[50])),
+                              ),
+                            ),
+                ),
+              ]),
             ],
           ),
           isActive: currentStep >= 1,
@@ -349,7 +402,45 @@ class _SeverityPageState extends State<SeverityPage> {
         ),
         Step(
           title: Text('Third'),
-          content: Column(),
+          content: Column(children: [
+            SizedBox(height: height * 0.02),
+            Text(
+              "-Press the start button once you are ready to do the protocol.",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w200,
+              ),
+            ),
+            SizedBox(height: height * 0.02),
+            Text(
+              "-Once you finish press the end button.",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w200,
+              ),
+            ),
+            SizedBox(height: height * 0.02),
+            Container(
+              width: width*0.6,
+              height: 100,
+              child: _isDone_2
+                  ? Image.asset(
+                      'assets/Done.png',
+                    )
+                  : _isLoading_2
+                      ? CircularProgressIndicator()
+                      : IconButton(
+                        onPressed: () {
+                          _startProcess(2);
+                        },
+                        icon: Icon(Icons.play_arrow,size: 50,),
+                        color: Colors.blue[900],
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.blue[50])),
+                      ),
+            ),
+          ]),
           isActive: currentStep >= 3,
           state: currentStep > 3 ? StepState.complete : StepState.indexed,
         ),
