@@ -285,6 +285,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modern_login/pages/login_page.dart';
+import 'package:modern_login/pages/main_page.dart';
 import 'package:modern_login/utils.dart';
 import '../Models/user_info.dart';
 import 'Edit_profile.dart';
@@ -541,15 +542,15 @@ class _HomePageState extends State<HomePage> {
             //   ],
             // ),
             //const SizedBox(height: 20), // Add some spacing before the button
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ExercisePage()),
-                );
-              },
-              child: Text('Go to Exercise Page'),
-            ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => ExercisePage()),
+            //     );
+            //   },
+            //   child: Text('Go to Exercise Page'),
+            // ),
           ],
         ),
       ),
