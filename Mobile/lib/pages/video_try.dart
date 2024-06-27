@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-/// Stateful widget to fetch and then display video content.
+// Stateful widget to fetch and then display video content.
 class VideoApp extends StatefulWidget {
   const VideoApp({super.key});
 
@@ -17,10 +17,7 @@ class _VideoAppState extends State<VideoApp> {
     super.initState();
     _controller = VideoPlayerController.asset('assets/Protocol.mp4')
       ..initialize().then((_) {
-        setState(() {
-          _controller.setLooping(true);
-          //_controller.play();
-        });
+        setState(() {});
       });
   }
 
@@ -29,26 +26,106 @@ class _VideoAppState extends State<VideoApp> {
     return MaterialApp(
       title: 'Video Demo',
       home: Scaffold(
-        body: Center(
-          child:Column(
-                children: <Widget>[
-                  AspectRatio(
-                    aspectRatio: _controller.value.aspectRatio,
-                  ),
-                  VideoProgressIndicator(
-                    _controller,
-                    allowScrubbing: true,
-                    padding: EdgeInsets.all(10),
-                  ),
-                ],
-              ) 
-          // _controller.value.isInitialized
-          //     ? AspectRatio(
-          //         aspectRatio: _controller.value.aspectRatio,
-          //         child: VideoPlayer(_controller),
-          //       )
-          //     : Container(),
-        ),
+        body: _controller.value.isInitialized
+            ? Container(
+                width: 300,
+                height: 178.75,
+                child: Column(
+                  children: [
+                    Container(
+                      width: 300,
+                      height: 168.75,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          AspectRatio(
+                            aspectRatio: _controller.value.aspectRatio,
+                            child: VideoPlayer(_controller),
+                          ),
+                          
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                if (_controller.value.isPlaying)
+                                {
+                                  _controller.pause();
+                                } else {
+                                  _controller.play();
+                                }
+                              });
+                            },
+                          ),
+                          Icon(
+                              _controller.value.isPlaying
+                                  ? null
+                                  : Icons.play_arrow,
+                              color: Colors.white,
+                              size: 60,
+                            ),
+                        ],
+                      ),
+                    ),
+                    VideoProgressIndicator(
+                      _controller,
+                      allowScrubbing: true,
+                      padding: EdgeInsets.only(
+                        top: 0,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            // GestureDetector(
+            //     onTap: () {
+            //       setState(() {
+            //         // _controller.value.isPlaying
+            //         //     ? _controller.pause()
+            //         //     : _controller.play();
+            //              _controller.play();
+            //       });
+            //     },
+            //     child: Container(
+            //       width: 300,
+            //       height: 300,
+            //       child: VideoPlayer(_controller),
+            //     )
+            // Stack(
+            //     alignment: Alignment.center,
+            //     children: [
+            //       AspectRatio(
+            //         aspectRatio: _controller.value.aspectRatio,
+            //         child: VideoPlayer(_controller),
+            //       ),
+            //       _controller.value.isPlaying
+            //           ? SizedBox.shrink() // Hide button when playing
+            //           : GestureDetector(
+            //               onTap: () {
+            //                 setState(() {
+            //                   _controller.value.isPlaying
+            //                       ? _controller.pause()
+            //                       : _controller.play();
+            //                 });
+            //               },
+            //               child: Container(
+            //                 width: 300,
+            //                 height: 300,
+            //                 decoration: BoxDecoration(
+            //                   color: Colors.black54,
+            //                   shape: BoxShape.rectangle,
+            //                 ),
+            //                 // child: Icon(
+            //                 //   _controller.value.isPlaying
+            //                 //       ? Icons.pause
+            //                 //       : Icons.play_arrow,
+            //                 //   color: Colors.white,
+            //                 //   size: 50,
+            //                 // ),
+            //               ),
+            //             ),
+            //     ],
+            //   )
+            //)
+            : CircularProgressIndicator(),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             setState(() {
@@ -73,7 +150,6 @@ class _VideoAppState extends State<VideoApp> {
   }
 }
 
-
 // import 'package:flutter/material.dart';
 // import 'package:video_player/video_player.dart';
 // import 'package:chewie/chewie.dart';
@@ -97,7 +173,7 @@ class _VideoAppState extends State<VideoApp> {
 //     _videoPlayerController = VideoPlayerController.asset(
 //       'assets/Protocol.mp4',
 //     );
-//     //await _videoPlayerController!.initialize();
+//     await _videoPlayerController!.initialize();
 //     _chewieController = ChewieController(
 //       videoPlayerController: _videoPlayerController!,
 //       autoPlay: true,
@@ -134,6 +210,53 @@ class _VideoAppState extends State<VideoApp> {
 //                 ],
 //               )
 //             : CircularProgressIndicator(),
+//       ),
+//     );
+//   }
+// }
+
+
+// import 'package:flutter/material.dart';
+// import 'package:flick_video_player/flick_video_player.dart';
+// import 'package:video_player/video_player.dart';
+
+// class SamplePlayer extends StatefulWidget {
+//   @override
+//   _SamplePlayerState createState() => _SamplePlayerState();
+// }
+
+// class _SamplePlayerState extends State<SamplePlayer> {
+//   late FlickManager flickManager;
+//   @override
+//   void initState() {
+//     super.initState();
+//     flickManager = FlickManager(
+//       videoPlayerController:
+//           VideoPlayerController.asset('assets/Protocol.mp4'),
+//         //onVideoEnd: 
+//     );
+//   }
+
+//   @override
+//   void dispose() {
+//     flickManager.dispose();
+//     super.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       child: Center(
+//         child: Container(
+//           width: 300,
+//           height: 300,
+//           child: AspectRatio(
+//             aspectRatio: 16 / 9,
+//             child: FlickVideoPlayer(
+//               flickManager: flickManager,
+//             ),
+//           ),
+//         ),
 //       ),
 //     );
 //   }

@@ -108,10 +108,11 @@ void OnDataRecv(const uint8_t *mac, const uint8_t *incomingData, int len)
   }
 }
 
-char buffer[20];
+//char buffer[20];
+int angle;
 // UDP setup
 WiFiUDP udp;
-const char* serverIP = "192.168.1.4"; // IP address of the Flutter app's device
+const char* serverIP = "192.168.1.2"; // IP address of the Flutter app's device
 const unsigned int udpPort = 4210;   // Port on which the Flutter app is listening 
 
 // Task to print data
@@ -151,12 +152,13 @@ void printDataTask(void *pvParameters)
     Serial.print(",");
     Serial.print(pitch_1 - pitch_2);
     Serial.print(",");
-
-    dtostrf(pitch_1 - pitch_2, 6, 2, buffer);
+    angle = pitch_1 - pitch_2;
+    //dtostrf(int(pitch_1 - pitch_2), 6, 0, buffer);
 
     // Send the data
     udp.beginPacket(serverIP, udpPort);
-    udp.write((uint8_t*)buffer, strlen(buffer));
+    //udp.write((uint8_t*)buffer, strlen(buffer));
+    udp.write((uint8_t *)&angle, sizeof(angle));
     udp.endPacket();
 
     
