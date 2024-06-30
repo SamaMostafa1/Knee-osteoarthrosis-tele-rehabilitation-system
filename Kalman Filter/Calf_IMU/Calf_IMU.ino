@@ -7,6 +7,7 @@
 Adafruit_MPU6050 mpu;
 
 constexpr char WIFI_SSID[] = "Etisalat-HjHC";
+//constexpr char WIFI_SSID[] = "STUDBME2";
 
 // Receiver MAC Address
 uint8_t broadcastAddress[] = {0xF4, 0x12, 0xFA, 0xCE, 0xF4, 0xA4};
@@ -54,15 +55,6 @@ float bias = 0.0f;
 float rate = 0.0f;
 float P[2][2] = {{0.0f, 0.0f}, {0.0f, 0.0f}};
 unsigned long last_read_time = millis();  // Move the variable here
-
-// callback when data is sent
-void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status)
-{
-  // Serial.print("\r\nLast Packet Send Status:\t");
-  // Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
-}
-
-
 
 void setup()
 {
@@ -141,17 +133,13 @@ void loop()
   myData.Pitch = angle*180.0 / PI;
   myData.acc_x = ax;
   myData.acc_y = ay;
- 
   myData.acc_z =  az;
-
+  
   myData.gyr_x = gx;
   myData.gyr_y = gy;
-
   myData.gyr_z = gz;
 
   // Serial.println(myData.Pitch);
-
-
 
   // Send message via ESP-NOW
   esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *)&myData, sizeof(myData));
@@ -190,6 +178,13 @@ void kalmanFilter(float newAngle, float newRate, float dt)
   P[0][1] -= K[0] * P[0][1];
   P[1][0] -= K[1] * P[0][0];
   P[1][1] -= K[1] * P[0][1];
+}
+
+// callback when data is sent
+void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status)
+{
+  // Serial.print("\r\nLast Packet Send Status:\t");
+  // Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
 }
 
 int32_t getWiFiChannel(const char *ssid) {
