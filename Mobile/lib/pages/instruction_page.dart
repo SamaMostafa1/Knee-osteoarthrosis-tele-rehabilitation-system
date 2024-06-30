@@ -632,7 +632,7 @@ class _VideoPageState extends State<VideoPage> {
   void initState() {
     super.initState();
     _isVideoEnded = false;
-    _controller = VideoPlayerController.asset('assets/Protocol.mp4')
+    _controller = VideoPlayerController.asset('assets/instruction.mp4')
       ..initialize().then((_) {
         setState(() {});
         _controller.play();
