@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:modern_login/pages/main_page.dart';
 import 'package:video_player/video_player.dart';
 
 class SeverityPage extends StatefulWidget {
@@ -10,28 +12,7 @@ class SeverityPage extends StatefulWidget {
   State<SeverityPage> createState() => _SeverityPageState();
 }
 
-class CircularBuffer<T> {
-  final int capacity;
-  List<T> _buffer;
-
-  CircularBuffer(this.capacity) : _buffer = [];
-
-  void add(T element) {
-    if (_buffer.length == capacity) {
-      // Remove the first element when the buffer is full
-      _buffer.removeAt(0);
-    }
-    // Add the new element
-    _buffer.add(element);
-  }
-
-  List<T> get buffer =>
-      // Return an unmodifiable view of the buffer
-      List.unmodifiable(_buffer);
-
-  @override
-  String toString() => _buffer.toString();
-}
+final database = FirebaseDatabase.instance.ref("Controls");
 
 class _SeverityPageState extends State<SeverityPage> {
   var width, height;
@@ -42,8 +23,10 @@ class _SeverityPageState extends State<SeverityPage> {
   double _opacity_1 = 1; // Initial opacity (faded)
   bool _isLoading_1 = false;
   bool _isLoading_2 = false;
+  bool _protocol_loading = false;
   bool _isDone_1 = false;
   bool _isDone_2 = false;
+  bool _protocol_Done = false;
 
   late VideoPlayerController _controller;
 
@@ -57,13 +40,14 @@ class _SeverityPageState extends State<SeverityPage> {
   @override
   void initState() {
     super.initState();
+    database.update({'Calibration': false});
+    database.update({'Protocol': false});
 
     _controller = VideoPlayerController.asset('assets/Protocol.mp4')
       ..initialize().then((_) {});
 
     buffer.add(10);
     buffer.add(20);
-    //setupUDP();
   }
 
   void add(int element) {
@@ -86,22 +70,6 @@ class _SeverityPageState extends State<SeverityPage> {
       }
     });
   }
-
-  // void setupUDP() async {
-  //   udpSocket = await RawDatagramSocket.bind(InternetAddress.anyIPv4, 4210);
-  //   udpSocket!.listen((RawSocketEvent event) {
-  //     if (event == RawSocketEvent.read) {
-  //       Datagram datagram = udpSocket!.receive()!;
-  //       if (datagram != null) {
-  //         setState(() {
-  //           data = String.fromCharCodes(datagram.data);
-  //         });
-  //         // String message = String.fromCharCodes(datagram.data);
-  //         // print('Received message: $message');
-  //       }
-  //     }
-  //   });
-  // }
 
   void _startProcess(int num) {
     if (num == 1) {
@@ -147,6 +115,7 @@ class _SeverityPageState extends State<SeverityPage> {
                     _isLoading_1 = false;
                     _changeOpacity(num);
                     socket.close();
+                    database.update({'Calibration': false});
                   });
                 }
               }
@@ -159,6 +128,7 @@ class _SeverityPageState extends State<SeverityPage> {
                     _isLoading_2 = false;
                     _changeOpacity(num);
                     socket.close();
+                    database.update({'Calibration': false});
                   });
                 }
               }
@@ -271,6 +241,7 @@ class _SeverityPageState extends State<SeverityPage> {
                           ? CircularProgressIndicator()
                           : IconButton(
                               onPressed: () {
+                                database.update({'Calibration': true});
                                 _startProcess(1);
                               },
                               icon: Icon(Icons.play_arrow),
@@ -318,8 +289,8 @@ class _SeverityPageState extends State<SeverityPage> {
                               duration: Duration(seconds: 0),
                               child: IconButton(
                                 onPressed: () {
-                                  if(_isDone_1)
-                                  {
+                                  if (_isDone_1) {
+                                    database.update({'Calibration': true});
                                     _startProcess(2);
                                   }
                                 },
@@ -402,7 +373,8 @@ class _SeverityPageState extends State<SeverityPage> {
         ),
         Step(
           title: Text('Third'),
-          content: Column(children: [
+          content:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             SizedBox(height: height * 0.02),
             Text(
               "-Press the start button once you are ready to do the protocol.",
@@ -420,26 +392,76 @@ class _SeverityPageState extends State<SeverityPage> {
               ),
             ),
             SizedBox(height: height * 0.02),
-            Container(
-              width: width*0.6,
-              height: 100,
-              child: _isDone_2
-                  ? Image.asset(
-                      'assets/Done.png',
-                    )
-                  : _isLoading_2
-                      ? CircularProgressIndicator()
-                      : IconButton(
-                        onPressed: () {
-                          _startProcess(2);
-                        },
-                        icon: Icon(Icons.play_arrow,size: 50,),
-                        color: Colors.blue[900],
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.blue[50])),
-                      ),
+            Center(
+              child: Container(
+                width: width * 0.2,
+                height: height * 0.1,
+                child: _protocol_Done
+                    ? Image.asset(
+                        'assets/Done.png',
+                      )
+                    : _protocol_loading
+                        ? Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              CircularProgressIndicator(
+                                strokeWidth: 4.0,
+                                strokeAlign: 8,
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  database.update({'Protocol': false});
+                                  setState(() {
+                                    _protocol_loading = false;
+                                    _protocol_Done = true;
+                                  });
+                                },
+                                icon: Icon(
+                                  Icons.pause,
+                                  color: Colors.blue[900],
+                                ),
+                                iconSize: 50.0,
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.blue[50])),
+                              ),
+                            ],
+                          )
+                        : Column(
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  database.update({'Protocol': true});
+                                  setState(() {
+                                    _protocol_loading = true;
+                                  });
+                                },
+                                icon: Icon(
+                                  Icons.play_arrow,
+                                  size: 50,
+                                ),
+                                color: Colors.blue[900],
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.blue[50])),
+                              ),
+                            ],
+                          ),
+              ),
             ),
+            SizedBox(height: height * 0.01),
+            Center(
+                child: _protocol_loading
+                    ? Text(
+                        "Pause",
+                        style: TextStyle(fontSize: 25),
+                      )
+                    : _protocol_Done
+                        ? null
+                        : Text(
+                            "Start",
+                            style: TextStyle(fontSize: 25),
+                          ))
           ]),
           isActive: currentStep >= 3,
           state: currentStep > 3 ? StepState.complete : StepState.indexed,
@@ -486,12 +508,6 @@ class _SeverityPageState extends State<SeverityPage> {
             physics: ClampingScrollPhysics(),
             steps: steps(),
             currentStep: currentStep,
-            onStepContinue: () {
-              if (isLastStep) {
-              } else {
-                setState(() => currentStep += 1);
-              }
-            },
             onStepCancel:
                 isFirstStep ? null : () => setState(() => currentStep -= 1),
             onStepTapped: (step) => setState(() => currentStep = step),
@@ -502,7 +518,15 @@ class _SeverityPageState extends State<SeverityPage> {
                     Expanded(
                       child: ElevatedButton(
                         child: Text(isLastStep ? 'Confirm' : 'Next'),
-                        onPressed: details.onStepContinue,
+                        onPressed: () {
+                          isLastStep
+                              ? Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MainPage()),
+                                )
+                              : setState(() => currentStep += 1);
+                        },
                       ),
                     ),
                     if (!isFirstStep) ...[
