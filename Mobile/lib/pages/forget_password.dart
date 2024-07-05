@@ -81,6 +81,7 @@
 // }
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:modern_login/pages/login_page.dart';
 
 import 'Splash.dart';
 
@@ -129,7 +130,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.blue, Colors.green],
+            colors: [Colors.blue.shade900, Colors.white],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -188,7 +189,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     onPressed: _isSendingResetEmail ? null : _resetPassword,
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-                      primary: Colors.teal,
+                      primary: Colors.blue[900],
                       onPrimary: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
@@ -205,12 +206,12 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => Splash()),
+                            builder: (context) => LoginPage()),
                       );
                     },
                     child: Text(
                       'Back to sign in',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.blue[900]),
                     ),
                   ),
                 ],

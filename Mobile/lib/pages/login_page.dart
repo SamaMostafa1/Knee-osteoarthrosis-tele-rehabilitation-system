@@ -75,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Colors.blueAccent,
       resizeToAvoidBottomInset: true,
-      body: Container(decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.blue,Colors.black])),
+      body: Container(decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.blue,Colors.white54])),
         child: SafeArea(
           child: SingleChildScrollView(
             child: Center(
