@@ -619,6 +619,7 @@ class instruction extends StatelessWidget {
         ));
   }
 }
+
 class VideoPage extends StatefulWidget {
   @override
   _VideoPageState createState() => _VideoPageState();
@@ -665,13 +666,45 @@ class _VideoPageState extends State<VideoPage> {
       appBar: AppBar(
         title: Text('Video Instructions'),
       ),
-      body: Center(
-        child: _controller.value.isInitialized
-            ? AspectRatio(
-          aspectRatio: _controller.value.aspectRatio,
-          child: VideoPlayer(_controller),
-        )
-            : CircularProgressIndicator(),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: _controller.value.isInitialized
+                ? AspectRatio(
+              aspectRatio: _controller.value.aspectRatio,
+              child: VideoPlayer(_controller),
+            )
+                : CircularProgressIndicator(),
+          ),
+          if (_controller.value.isInitialized)
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SliderTheme(
+                data: SliderTheme.of(context).copyWith(
+                  activeTrackColor: Colors.blue,
+                  inactiveTrackColor: Colors.grey.withOpacity(0.8),
+                  trackHeight: 4.0,
+                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8.0),
+                  thumbColor: Colors.blue,
+                  overlayColor: Colors.blue.withAlpha(32),
+                  overlayShape: RoundSliderOverlayShape(overlayRadius: 16.0),
+                  valueIndicatorTextStyle: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                child: Slider(
+                  value: _controller.value.position.inSeconds.toDouble(),
+                  max: _controller.value.duration.inSeconds.toDouble(),
+                  onChanged: (value) {
+                    setState(() {
+                      _controller.seekTo(Duration(seconds: value.toInt()));
+                    });
+                  },
+                ),
+              ),
+            ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
