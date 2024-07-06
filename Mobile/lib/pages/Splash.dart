@@ -24,8 +24,9 @@ class Splash extends StatelessWidget {
             return Scaffold(
               body: Container(
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: [Colors.blue, Colors.black]),
+                  gradient: LinearGradient(colors: [Colors.blue, Colors.blue.shade100]),
                 ),
+                // color: Colors.blue.shade900,
                 child: SafeArea(
                   child: LayoutBuilder(
                     builder: (context, constraints) {
@@ -47,23 +48,32 @@ class Splash extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.blue[900],
+
+                                ),
                                 onPressed: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(builder: (context) => LoginPage()),
                                   );
                                 },
-                                child: Text('Login'),
+                                child: Text('Login',style: TextStyle(color: Colors.white),),
+
                               ),
                               SizedBox(width: 10),
                               ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.blue[900],
+
+                                ),
                                 onPressed: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(builder: (context) => RegisterPage()),
                                   );
                                 },
-                                child: Text('Register'),
+                                child: Text('Register',style: TextStyle(color: Colors.white),),
                               ),
                             ],
                           ),

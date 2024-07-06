@@ -48,7 +48,7 @@ dependencies:
   smooth_page_indicator:
   video_player:
   percent_indicator:
-  supabase_flutter:
+  udp:
 
 dev_dependencies:
   flutter_test:

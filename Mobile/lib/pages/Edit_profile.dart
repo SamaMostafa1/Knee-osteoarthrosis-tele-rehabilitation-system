@@ -123,7 +123,7 @@ class _EditHomePageState extends State<EditHomePage> {
                   clipper: MyCustomClipper(),
                   child: Container(
                     height: 160,
-                    color: Colors.teal,
+                    color: Colors.blue[900],
                   ),
                 ),
                 _image != null

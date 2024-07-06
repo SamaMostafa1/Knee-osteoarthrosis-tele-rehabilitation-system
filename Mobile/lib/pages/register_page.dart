@@ -79,7 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
 
       resizeToAvoidBottomInset: true,
-      body: Container(decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.blue,Colors.black])),
+      body: Container(decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.blue,Colors.blue.shade100])),
         child: SafeArea(
           child: SingleChildScrollView(
             child: Center(
