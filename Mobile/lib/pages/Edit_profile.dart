@@ -226,8 +226,9 @@ class _EditHomePageState extends State<EditHomePage> {
               children: [
                 Expanded(
                   child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.blue[900],),
                     onPressed: writeData,
-                    child: const Text('Save'),
+                    child: const Text('Save',style: TextStyle(color: Colors.white)),
                   ),
                 ),
               ],
