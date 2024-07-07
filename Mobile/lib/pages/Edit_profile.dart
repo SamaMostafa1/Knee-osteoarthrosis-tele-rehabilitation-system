@@ -37,6 +37,8 @@ class _EditHomePageState extends State<EditHomePage> {
   final FirebaseStorage _storage = FirebaseStorage.instance;
   String? _imageUrl;
 
+
+
   @override
   void initState() {
     super.initState();
@@ -67,6 +69,17 @@ class _EditHomePageState extends State<EditHomePage> {
   }
 
   void writeData() {
+    if (flag == 1) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Data not saved due to invalid input."),
+          backgroundColor: Colors.red,
+        ),
+      );
+      print("Data not saved due to invalid input.");
+      return;
+    }
+
     UserInfoooo userinfo = UserInfoooo(
       name: _textFieldController1.text.trim(),
       age: _textFieldController2.text.trim(),
@@ -78,7 +91,6 @@ class _EditHomePageState extends State<EditHomePage> {
     updateRecord("pat_age", userinfo.age);
     updateRecord("pat_weight", userinfo.weight);
     updateRecord("pat_gender", userinfo.Gender);
-
 
     dbRef.child(user.uid).set(userinfo.toJson()).then((_) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -193,6 +205,7 @@ class _EditHomePageState extends State<EditHomePage> {
                     if (int.tryParse(value) != null) {
                       int lengthValue = int.parse(value);
                       if (lengthValue > 130) {
+                        flag=1;
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Maximum value allowed is 130'),
@@ -206,6 +219,7 @@ class _EditHomePageState extends State<EditHomePage> {
                     if (int.tryParse(value) != null) {
                       int lengthValue = int.parse(value);
                       if (lengthValue > 500) {
+                        flag=1;
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Maximum value allowed is 500'),
@@ -219,6 +233,7 @@ class _EditHomePageState extends State<EditHomePage> {
                     if (int.tryParse(value) != null) {
                       int lengthValue = int.parse(value);
                       if (lengthValue > 300) {
+                        flag=1;
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Maximum value allowed is 300'),

@@ -198,6 +198,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:confetti/confetti.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -232,11 +233,20 @@ class _ExercisePageState extends State<ExercisePage> {
   static const maxScore = 2;
   final ConfettiController _confettiController = ConfettiController(duration: const Duration(seconds: 1));
   RawDatagramSocket? _udpSocket;
+  final SupabaseClient supabase = Supabase.instance.client;
 
   @override
   void initState() {
     super.initState();
+    updateRecord("exercise", true);
     _startListeningUDP();
+
+
+  }
+
+
+  void updateRecord(String button, bool value) async {
+    await supabase.from('Controls').update({button: value}).eq('id', 1);
   }
 
   void _startListeningUDP() async {
@@ -266,6 +276,7 @@ class _ExercisePageState extends State<ExercisePage> {
   void dispose() {
     _confettiController.dispose();
     _udpSocket?.close();
+    updateRecord("exercise", false);
     super.dispose();
   }
 
