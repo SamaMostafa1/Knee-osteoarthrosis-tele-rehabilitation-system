@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:modern_login/pages/home_page.dart';
 import 'package:modern_login/pages/login_page.dart';
 import 'package:modern_login/utils.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../Models/user_info.dart';
 import 'Splash.dart';
 import '../utils.dart';
@@ -22,18 +23,21 @@ class EditHomePage extends StatefulWidget {
 
 class _EditHomePageState extends State<EditHomePage> {
   final user = FirebaseAuth.instance.currentUser!;
-  final DatabaseReference dbRef =
-  FirebaseDatabase.instance.reference().child("data");
+  final DatabaseReference dbRef = FirebaseDatabase.instance.reference().child("data");
+  final SupabaseClient supabase = Supabase.instance.client;
 
   TextEditingController _textFieldController1 = TextEditingController();
   TextEditingController _textFieldController2 = TextEditingController();
   TextEditingController _textFieldController3 = TextEditingController();
   TextEditingController _textFieldController4 = TextEditingController();
+  TextEditingController _textFieldController5 = TextEditingController();
 
-  List<String> fieldTitles = ['Name', 'Age', 'Weight', 'Length'];
+  List<String> fieldTitles = ['Name', 'Age', 'Weight', 'Length', 'Gender'];
   var flag = 0;
   final FirebaseStorage _storage = FirebaseStorage.instance;
   String? _imageUrl;
+
+
 
   @override
   void initState() {
@@ -48,6 +52,7 @@ class _EditHomePageState extends State<EditHomePage> {
           _textFieldController2.text = info.age;
           _textFieldController3.text = info.weight;
           _textFieldController4.text = info.length;
+          _textFieldController5.text = info.Gender;
           setState(() {});
         } else {
           print("Error: Data is not in the expected format");
@@ -59,13 +64,33 @@ class _EditHomePageState extends State<EditHomePage> {
     fetchUserImage();
   }
 
+  void updateRecord(String button, String value) async {
+    await supabase.from('Controls').update({button: value}).eq('id', 1);
+  }
+
   void writeData() {
+    if (flag == 1) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Data not saved due to invalid input."),
+          backgroundColor: Colors.red,
+        ),
+      );
+      print("Data not saved due to invalid input.");
+      return;
+    }
+
     UserInfoooo userinfo = UserInfoooo(
       name: _textFieldController1.text.trim(),
       age: _textFieldController2.text.trim(),
       weight: _textFieldController3.text.trim(),
       length: _textFieldController4.text.trim(),
+      Gender: _textFieldController5.text.trim(),
     );
+    updateRecord("pat_height", userinfo.length);
+    updateRecord("pat_age", userinfo.age);
+    updateRecord("pat_weight", userinfo.weight);
+    updateRecord("pat_gender", userinfo.Gender);
 
     dbRef.child(user.uid).set(userinfo.toJson()).then((_) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -92,7 +117,6 @@ class _EditHomePageState extends State<EditHomePage> {
   }
 
   void saveProfile() async {
-    // String name =dbRef.child(user.uid).get().then((DataSnapshot data);
     String resp = await StoreData().saveData(name: user.uid, file: _image!);
   }
 
@@ -154,30 +178,34 @@ class _EditHomePageState extends State<EditHomePage> {
             ),
             for (int i = 0; i < fieldTitles.length; i++)
               Padding(
-                padding: const EdgeInsets.all(13.0),
+                padding: const EdgeInsets.all(3.0),
                 child: TextField(
                   style: const TextStyle(color: Colors.black),
-                  keyboardType:
-                  i != 0 ? TextInputType.number : TextInputType.text,
+                  keyboardType: i == 1 || i == 2 || i == 3 ? TextInputType.number : TextInputType.text,
                   controller: i == 0
                       ? _textFieldController1
                       : i == 1
                       ? _textFieldController2
                       : i == 2
                       ? _textFieldController3
-                      : _textFieldController4,
+                      : i == 3
+                      ? _textFieldController4
+                      : _textFieldController5,
                   maxLength: i == 0
                       ? 21
                       : i == 1
                       ? 3
                       : i == 2
                       ? 3
-                      : 3,
+                      : i == 3
+                      ? 3
+                      : 6,
                   onChanged: i == 1
                       ? (value) {
                     if (int.tryParse(value) != null) {
                       int lengthValue = int.parse(value);
                       if (lengthValue > 130) {
+                        flag=1;
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Maximum value allowed is 130'),
@@ -191,10 +219,24 @@ class _EditHomePageState extends State<EditHomePage> {
                     if (int.tryParse(value) != null) {
                       int lengthValue = int.parse(value);
                       if (lengthValue > 500) {
+                        flag=1;
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content:
-                            Text('Maximum value allowed is 500'),
+                            content: Text('Maximum value allowed is 500'),
+                          ),
+                        );
+                      }
+                    }
+                  }
+                      : i == 3
+                      ? (value) {
+                    if (int.tryParse(value) != null) {
+                      int lengthValue = int.parse(value);
+                      if (lengthValue > 300) {
+                        flag=1;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Maximum value allowed is 300'),
                           ),
                         );
                       }
@@ -218,7 +260,7 @@ class _EditHomePageState extends State<EditHomePage> {
                         ? const Icon(Icons.accessibility)
                         : i == 3
                         ? const Icon(Icons.baby_changing_station)
-                        : null,
+                        : const Icon(Icons.person),
                   ),
                 ),
               ),
@@ -226,8 +268,9 @@ class _EditHomePageState extends State<EditHomePage> {
               children: [
                 Expanded(
                   child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.blue[900]),
                     onPressed: writeData,
-                    child: const Text('Save'),
+                    child: const Text('Save', style: TextStyle(color: Colors.white)),
                   ),
                 ),
               ],

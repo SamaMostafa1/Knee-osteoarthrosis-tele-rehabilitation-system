@@ -32,8 +32,10 @@ class _HomePageState extends State<HomePage> {
   TextEditingController _textFieldController2 = TextEditingController();
   TextEditingController _textFieldController3 = TextEditingController();
   TextEditingController _textFieldController4 = TextEditingController();
+  TextEditingController _textFieldController5 = TextEditingController();
 
-  List<String> fieldTitles = ['Name', 'Age', 'Weight', 'Length'];
+
+  List<String> fieldTitles = ['Name', 'Age', 'Weight', 'Length',"Gender"];
   final FirebaseStorage _storage = FirebaseStorage.instance;
   String? _imageUrl;
   bool showFields = true; // Always show fields when entering the page
@@ -54,6 +56,7 @@ class _HomePageState extends State<HomePage> {
           _textFieldController2.text = info.age;
           _textFieldController3.text = info.weight;
           _textFieldController4.text = info.length;
+          _textFieldController5.text = info.Gender;
           setState(() {});
         } else {
           print("Error: Data is not in the expected format");
@@ -79,6 +82,7 @@ class _HomePageState extends State<HomePage> {
       age: _textFieldController2.text.trim(),
       weight: _textFieldController3.text.trim(),
       length: _textFieldController4.text.trim(),
+      Gender: _textFieldController5.text.trim(),
     );
 
     dbRef.child(user.uid).set(userinfo.toJson()).then((_) {
@@ -176,33 +180,34 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             Center(
-              child: Padding(
-                padding: const EdgeInsets.all(1.0),
-                child: Text("Logged IN as: ${user.email}"),
-              ),
+              child: Text("Logged IN as: ${user.email}"),
             ),
             for (int i = 0; i < fieldTitles.length; i++)
               Padding(
-                padding: const EdgeInsets.all(13.0),
+                padding: const EdgeInsets.all(6.0),
                 child: TextField(
                   readOnly: true,
                   style: const TextStyle(color: Colors.black),
                   keyboardType:
-                      i != 0 ? TextInputType.number : TextInputType.text,
+                  i == 1 || i == 2 || i == 3 ? TextInputType.number : TextInputType.text,
                   controller: i == 0
                       ? _textFieldController1
                       : i == 1
                           ? _textFieldController2
                           : i == 2
                               ? _textFieldController3
-                              : _textFieldController4,
+                      : i == 3
+                      ? _textFieldController4
+                      : _textFieldController5,
                   maxLength: i == 0
                       ? 21
                       : i == 1
-                          ? 3
-                          : i == 2
-                              ? 3
-                              : 3,
+                      ? 3
+                      : i == 2
+                      ? 3
+                      : i == 3
+                      ? 3
+                      : 6,
                   onChanged: i == 1
                       ? (value) {
                           if (int.tryParse(value) != null) {
@@ -248,7 +253,7 @@ class _HomePageState extends State<HomePage> {
                                 ? const Icon(Icons.accessibility)
                                 : i == 3
                                     ? const Icon(Icons.baby_changing_station)
-                                    : null,
+                                    : const Icon(Icons.person),
                   ),
                 ),
               ),
