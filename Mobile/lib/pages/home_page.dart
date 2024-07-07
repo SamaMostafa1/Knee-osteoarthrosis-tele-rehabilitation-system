@@ -253,7 +253,7 @@ class _HomePageState extends State<HomePage> {
                                 ? const Icon(Icons.accessibility)
                                 : i == 3
                                     ? const Icon(Icons.baby_changing_station)
-                                    : null,
+                                    : const Icon(Icons.person),
                   ),
                 ),
               ),
