@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:modern_login/pages/main_page.dart';
 import 'package:video_player/video_player.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SeverityPage extends StatefulWidget {
   const SeverityPage({super.key});
@@ -12,12 +12,11 @@ class SeverityPage extends StatefulWidget {
   State<SeverityPage> createState() => _SeverityPageState();
 }
 
-final database = FirebaseDatabase.instance.ref("Controls");
-
 class _SeverityPageState extends State<SeverityPage> {
   var width, height;
   List buffer = [];
   final int capacity = 5;
+  final SupabaseClient supabase = Supabase.instance.client;
 
   double _opacity_2 = 0.2; // Initial opacity (faded)
   double _opacity_1 = 1; // Initial opacity (faded)
@@ -40,8 +39,8 @@ class _SeverityPageState extends State<SeverityPage> {
   @override
   void initState() {
     super.initState();
-    database.update({'Calibration': false});
-    database.update({'Protocol': false});
+    supabase.from('Controls').update({'protocol': false}).eq('id', 1);
+    supabase.from('Controls').update({'calibration': false}).eq('id', 1);
 
     _controller = VideoPlayerController.asset('assets/Protocol.mp4')
       ..initialize().then((_) {});
@@ -103,32 +102,37 @@ class _SeverityPageState extends State<SeverityPage> {
             //buffer.add(receivedInt);
             add(receivedInt);
 
-            if (buffer.length == capacity) {
+            if (buffer.length == capacity)
+            {
               int sum =
                   buffer[0] + buffer[1] + buffer[2] + buffer[3] + buffer[4];
               int avg = sum ~/ capacity;
-              if (num == 1) {
-                if (avg > -5 && avg < 10) {
-                  //Future.delayed(Duration(seconds: 10));
+              if (num == 1)
+              {
+                if (avg > -5 && avg < 10)
+                {
+                  Future.delayed(Duration(seconds: 10));
                   setState(() {
                     _isDone_1 = true;
                     _isLoading_1 = false;
                     _changeOpacity(num);
                     socket.close();
-                    database.update({'Calibration': false});
+                    supabase.from('Controls').update({'calibration': false}).eq('id', 1);
                   });
                 }
               }
-              if (num == 2) {
+              if (num == 2)
+              {
                 //if (avg > 82 && avg < 95) {
-                if (avg > -5 && avg < 10) {
+                if (avg > -5 && avg < 10)
+                {
                   //Future.delayed(Duration(seconds: 10));
                   setState(() {
                     _isDone_2 = true;
                     _isLoading_2 = false;
                     _changeOpacity(num);
                     socket.close();
-                    database.update({'Calibration': false});
+                    supabase.from('Controls').update({'calibration': false}).eq('id', 1);
                   });
                 }
               }
@@ -140,7 +144,8 @@ class _SeverityPageState extends State<SeverityPage> {
   }
 
   @override
-  void dispose() {
+  void dispose()
+  {
     //udpSocket?.close();
     super.dispose();
   }
@@ -187,7 +192,7 @@ class _SeverityPageState extends State<SeverityPage> {
           state: currentStep > 0 ? StepState.complete : StepState.indexed,
         ),
         Step(
-          title: Text('Calib'),
+          title: Text('Calibration'),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -241,7 +246,7 @@ class _SeverityPageState extends State<SeverityPage> {
                           ? CircularProgressIndicator()
                           : IconButton(
                               onPressed: () {
-                                database.update({'Calibration': true});
+                                supabase.from('Controls').update({'calibration': true}).eq('id', 1);
                                 _startProcess(1);
                               },
                               icon: Icon(Icons.play_arrow),
@@ -290,7 +295,7 @@ class _SeverityPageState extends State<SeverityPage> {
                               child: IconButton(
                                 onPressed: () {
                                   if (_isDone_1) {
-                                    database.update({'Calibration': true});
+                                    supabase.from('Controls').update({'calibration': true}).eq('id', 1);
                                     _startProcess(2);
                                   }
                                 },
@@ -309,7 +314,7 @@ class _SeverityPageState extends State<SeverityPage> {
           state: currentStep > 1 ? StepState.complete : StepState.indexed,
         ),
         Step(
-          title: Text(''),
+          title: Text('Info'),
           content: Column(
             children: [
               _controller.value.isInitialized
@@ -372,7 +377,7 @@ class _SeverityPageState extends State<SeverityPage> {
           state: currentStep > 2 ? StepState.complete : StepState.indexed,
         ),
         Step(
-          title: Text('Third'),
+          title: Text('Protocol'),
           content:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             SizedBox(height: height * 0.02),
@@ -410,7 +415,7 @@ class _SeverityPageState extends State<SeverityPage> {
                               ),
                               IconButton(
                                 onPressed: () {
-                                  database.update({'Protocol': false});
+                                  supabase.from('Controls').update({'protocol': false}).eq('id', 1);
                                   setState(() {
                                     _protocol_loading = false;
                                     _protocol_Done = true;
@@ -431,7 +436,7 @@ class _SeverityPageState extends State<SeverityPage> {
                             children: [
                               IconButton(
                                 onPressed: () {
-                                  database.update({'Protocol': true});
+                                  supabase.from('Controls').update({'protocol': true}).eq('id', 1);
                                   setState(() {
                                     _protocol_loading = true;
                                   });
