@@ -49,6 +49,7 @@ dependencies:
   video_player:
   percent_indicator:
   udp:
+  supabase_flutter:
 
 dev_dependencies:
   flutter_test:
