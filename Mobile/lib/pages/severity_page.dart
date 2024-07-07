@@ -39,8 +39,8 @@ class _SeverityPageState extends State<SeverityPage> {
   @override
   void initState() {
     super.initState();
-    supabase.from('Controls').update({'protocol': false}).eq('id', 1);
-    supabase.from('Controls').update({'calibration': false}).eq('id', 1);
+    updateRecord('protocol', false);
+    updateRecord('calibration', false);
 
     _controller = VideoPlayerController.asset('assets/Protocol.mp4')
       ..initialize().then((_) {});
@@ -90,6 +90,10 @@ class _SeverityPageState extends State<SeverityPage> {
     });
   }
 
+  void updateRecord(String button, bool value) async {
+    await supabase.from('Controls').update({button: value}).eq('id', 1);
+  }
+
   Future<void> _receiveDataFromUDPServer(int num) async {
     RawDatagramSocket.bind(InternetAddress.anyIPv4, 4210).then((socket) {
       socket.listen((event) {
@@ -98,41 +102,34 @@ class _SeverityPageState extends State<SeverityPage> {
           if (datagram != null) {
             // Process the received data
             ByteData byteData = ByteData.sublistView(datagram.data);
-            int receivedInt = byteData.getInt32(0, Endian.big);
-            //buffer.add(receivedInt);
+            int receivedInt = byteData.getInt32(0, Endian.little);
             add(receivedInt);
+            //print(receivedInt);
 
-            if (buffer.length == capacity)
-            {
+            if (buffer.length == capacity) {
               int sum =
                   buffer[0] + buffer[1] + buffer[2] + buffer[3] + buffer[4];
               int avg = sum ~/ capacity;
-              if (num == 1)
-              {
-                if (avg > -5 && avg < 10)
-                {
-                  Future.delayed(Duration(seconds: 10));
+              if (num == 1) {
+                if (avg > -5 && avg < 10) {
                   setState(() {
                     _isDone_1 = true;
                     _isLoading_1 = false;
                     _changeOpacity(num);
                     socket.close();
-                    supabase.from('Controls').update({'calibration': false}).eq('id', 1);
+                    updateRecord('calibration', false);
                   });
                 }
               }
-              if (num == 2)
-              {
-                //if (avg > 82 && avg < 95) {
-                if (avg > -5 && avg < 10)
-                {
-                  //Future.delayed(Duration(seconds: 10));
+              if (num == 2) {
+                if (avg > 82 && avg < 95) {
+                //if (avg > -5 && avg < 10) {
                   setState(() {
                     _isDone_2 = true;
                     _isLoading_2 = false;
                     _changeOpacity(num);
                     socket.close();
-                    supabase.from('Controls').update({'calibration': false}).eq('id', 1);
+                    updateRecord('calibration', false);
                   });
                 }
               }
@@ -144,8 +141,7 @@ class _SeverityPageState extends State<SeverityPage> {
   }
 
   @override
-  void dispose()
-  {
+  void dispose() {
     //udpSocket?.close();
     super.dispose();
   }
@@ -246,7 +242,7 @@ class _SeverityPageState extends State<SeverityPage> {
                           ? CircularProgressIndicator()
                           : IconButton(
                               onPressed: () {
-                                supabase.from('Controls').update({'calibration': true}).eq('id', 1);
+                                updateRecord('calibration', true);
                                 _startProcess(1);
                               },
                               icon: Icon(Icons.play_arrow),
@@ -295,7 +291,7 @@ class _SeverityPageState extends State<SeverityPage> {
                               child: IconButton(
                                 onPressed: () {
                                   if (_isDone_1) {
-                                    supabase.from('Controls').update({'calibration': true}).eq('id', 1);
+                                    updateRecord('calibration', true);
                                     _startProcess(2);
                                   }
                                 },
@@ -415,7 +411,7 @@ class _SeverityPageState extends State<SeverityPage> {
                               ),
                               IconButton(
                                 onPressed: () {
-                                  supabase.from('Controls').update({'protocol': false}).eq('id', 1);
+                                  updateRecord('protocol', false);
                                   setState(() {
                                     _protocol_loading = false;
                                     _protocol_Done = true;
@@ -436,7 +432,7 @@ class _SeverityPageState extends State<SeverityPage> {
                             children: [
                               IconButton(
                                 onPressed: () {
-                                  supabase.from('Controls').update({'protocol': true}).eq('id', 1);
+                                  updateRecord('protocol', true);
                                   setState(() {
                                     _protocol_loading = true;
                                   });
