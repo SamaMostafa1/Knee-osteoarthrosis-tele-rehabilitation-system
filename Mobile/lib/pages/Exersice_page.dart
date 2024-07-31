@@ -194,6 +194,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:confetti/confetti.dart';
@@ -231,7 +232,8 @@ class _ExercisePageState extends State<ExercisePage> {
   double angle = 0;
   int score = 0;
   static const maxScore = 2;
-  final ConfettiController _confettiController = ConfettiController(duration: const Duration(seconds: 1));
+  final ConfettiController _confettiController =
+      ConfettiController(duration: const Duration(seconds: 1));
   RawDatagramSocket? _udpSocket;
   final SupabaseClient supabase = Supabase.instance.client;
 
@@ -240,25 +242,24 @@ class _ExercisePageState extends State<ExercisePage> {
     super.initState();
     updateRecord("exercise", true);
     _startListeningUDP();
-
-
   }
-
 
   void updateRecord(String button, bool value) async {
     await supabase.from('Controls').update({button: value}).eq('id', 1);
   }
 
   void _startListeningUDP() async {
-    _udpSocket = await RawDatagramSocket.bind(InternetAddress.anyIPv4, 8888);
+    _udpSocket = await RawDatagramSocket.bind(InternetAddress.anyIPv4, 4210);
     _udpSocket!.listen((event) {
       if (event == RawSocketEvent.read) {
         Datagram? datagram = _udpSocket!.receive();
         if (datagram != null) {
-          String message = utf8.decode(datagram.data);
+          //String message = utf8.decode(datagram.data);
+          ByteData byteData = ByteData.sublistView(datagram.data);
+          int rec_angle = byteData.getInt32(0, Endian.little);
+          angle = rec_angle.toDouble();
+          print(angle);
           setState(() {
-            angle = double.tryParse(message) ?? 0;
-            print(angle);
             if (angle == 90) {
               score++;
               if (score == maxScore) {
@@ -293,8 +294,10 @@ class _ExercisePageState extends State<ExercisePage> {
       ),
       body: OrientationBuilder(
         builder: (context, orientation) {
-          double gifHeight = orientation == Orientation.portrait ? height * 0.3 : height * 0.5;
-          double gifWidth = orientation == Orientation.portrait ? width  : width * 0.4;
+          double gifHeight =
+              orientation == Orientation.portrait ? height * 0.3 : height * 0.5;
+          double gifWidth =
+              orientation == Orientation.portrait ? width : width * 0.4;
 
           return Stack(
             children: [
@@ -308,7 +311,7 @@ class _ExercisePageState extends State<ExercisePage> {
                   fit: BoxFit.cover,
                 ),
               ),
-              RotatingLeg(angle: angle, rotationOrigin: const Offset(10, -20)),
+              RotatingLeg(angle: angle as double, rotationOrigin: const Offset(10, -20)),
               Positioned(
                 bottom: 60,
                 left: 30,
@@ -332,7 +335,13 @@ class _ExercisePageState extends State<ExercisePage> {
                   blastDirectionality: BlastDirectionality.explosive,
                   shouldLoop: false,
                   gravity: 0.1,
-                  colors: const [Colors.red, Colors.blue, Colors.green, Colors.yellow, Colors.purple],
+                  colors: const [
+                    Colors.red,
+                    Colors.blue,
+                    Colors.green,
+                    Colors.yellow,
+                    Colors.purple
+                  ],
                 ),
               ),
               Positioned(
@@ -349,7 +358,10 @@ class _ExercisePageState extends State<ExercisePage> {
                       progressColor: Colors.green,
                       center: Text(
                         '${(progress * 100).toStringAsFixed(0)}%',
-                        style: const TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold, color: Colors.black),
+                        style: const TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
                       ),
                     ),
                   ],
@@ -367,7 +379,9 @@ class RotatingLeg extends StatelessWidget {
   final double angle;
   final Offset rotationOrigin;
 
-  const RotatingLeg({Key? key, required this.angle, required this.rotationOrigin}) : super(key: key);
+  const RotatingLeg(
+      {Key? key, required this.angle, required this.rotationOrigin})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -409,4 +423,3 @@ class RotatingLeg extends StatelessWidget {
     );
   }
 }
-

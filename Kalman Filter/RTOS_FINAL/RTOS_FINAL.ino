@@ -37,6 +37,8 @@ bool thigh = false;
 volatile float pitch_T = 0;
 volatile float pitch_C = 0;
 int angle = 0;
+unsigned long start_time;
+float elapsed_time = 0;
 
 typedef struct sensorData
 {
@@ -51,6 +53,7 @@ typedef struct sensorData
 sensorData Calf_Data[MAX_DATA_SIZE];
 sensorData Thigh_Data[MAX_DATA_SIZE];
 int Angle[MAX_DATA_SIZE];
+float Time[MAX_DATA_SIZE];
 
 float Features[43];
 Eloquent::ML::Port::RandomForest RF;
@@ -144,6 +147,7 @@ void OnDataRecv(const esp_now_recv_info *info, const uint8_t *incomingData, int 
   }
   if(protocol && (Angle_Pointer<MAX_DATA_SIZE) )
   {
+    elapsed_time = ( (millis() - start_time) / 1000.0);
     if (myData.esp_no[0] == 'T' && (flag == 0 || flag == 'T') && thigh == false)
     {
       pitch_T = myData.Pitch;
@@ -181,6 +185,9 @@ void OnDataRecv(const esp_now_recv_info *info, const uint8_t *incomingData, int 
       Serial.print("Angle:");
       Serial.println(Angle_Pointer);
       Serial.println(Angle[Angle_Pointer]);
+      Time[Angle_Pointer] = elapsed_time;
+      Serial.print("Time:");
+      Serial.println(Time[Angle_Pointer]);
       Angle_Pointer++;
       calf = false;
       thigh = false;
@@ -273,6 +280,7 @@ void handleData(void *pvParameters)
         }
         String final_prediction = RF.predictLabel(Features);
         Serial.println(final_prediction);
+        sendPrediction( "https://fmszngwfmhnbbwyngztc.supabase.co/rest/v1/Patient_Personal_Data?id=eq.1" ,final_prediction);
       }
       else if(protocol)
       {
@@ -282,6 +290,7 @@ void handleData(void *pvParameters)
           esp_now_init();
           esp_now_register_recv_cb(OnDataRecv);
           protocol_flag = 1;
+          start_time = millis();
         }
       }
       else if(protocol_flag)
@@ -290,7 +299,7 @@ void handleData(void *pvParameters)
         Serial.println("start uploading");
         esp_now_unregister_recv_cb();
         esp_now_deinit();
-        http.begin("https://fmszngwfmhnbbwyngztc.supabase.co/rest/v1/data");
+        http.begin("https://fmszngwfmhnbbwyngztc.supabase.co/rest/v1/Patient_Data");
         http.addHeader("Content-Type", "application/json");
         http.addHeader("apikey", API_KEY);
         http.addHeader("Authorization", "Bearer " + String(API_KEY));
@@ -308,19 +317,21 @@ void handleData(void *pvParameters)
           {
             JsonObject jsonObject = jsonArray.createNestedObject();
             //jsonObject["id"] = i;
-            jsonObject["Angle"] = Angle[counter];
-            jsonObject["Acc_X_T"] = round(Thigh_Data[counter].acc_x * 100) / 100.0;
-            jsonObject["Acc_Y_T"] = round(Thigh_Data[counter].acc_y * 100) / 100.0;;
-            jsonObject["Acc_Z_T"] = round(Thigh_Data[counter].acc_z * 100) / 100.0;
-            jsonObject["Gyr_X_T"] = round(Thigh_Data[counter].gyr_x * 100) / 100.0;
-            jsonObject["Gyr_Y_T"] = round(Thigh_Data[counter].gyr_y * 100) / 100.0;
-            jsonObject["Gyr_Z_T"] = round(Thigh_Data[counter].gyr_z * 100) / 100.0;
-            jsonObject["Acc_X_C"] = round(Thigh_Data[counter].acc_x * 100) / 100.0;
-            jsonObject["Acc_Y_C"] = round(Thigh_Data[counter].acc_y * 100) / 100.0;
-            jsonObject["Acc_Z_C"] = round(Thigh_Data[counter].acc_z * 100) / 100.0;
-            jsonObject["Gyr_X_C"] = round(Thigh_Data[counter].gyr_x * 100) / 100.0;
-            jsonObject["Gyr_Y_C"] = round(Thigh_Data[counter].gyr_y * 100) / 100.0;
-            jsonObject["Gyr_Z_C"] = round(Thigh_Data[counter].gyr_z * 100) / 100.0;
+            //jsonObject["time"] = Time[counter];
+            jsonObject["time"] = round(Time[counter]* 100) / 100.0;
+            jsonObject["knee_angle"] = Angle[counter];
+            jsonObject["accX_T"] = round(Thigh_Data[counter].acc_x * 100) / 100.0;
+            jsonObject["accY_T"] = round(Thigh_Data[counter].acc_y * 100) / 100.0;;
+            jsonObject["accZ_T"] = round(Thigh_Data[counter].acc_z * 100) / 100.0;
+            jsonObject["gyrX_T"] = round(Thigh_Data[counter].gyr_x * 100) / 100.0;
+            jsonObject["gyrY_T"] = round(Thigh_Data[counter].gyr_y * 100) / 100.0;
+            jsonObject["gyrZ_T"] = round(Thigh_Data[counter].gyr_z * 100) / 100.0;
+            jsonObject["accX_C"] = round(Thigh_Data[counter].acc_x * 100) / 100.0;
+            jsonObject["accY_C"] = round(Thigh_Data[counter].acc_y * 100) / 100.0;
+            jsonObject["accZ_C"] = round(Thigh_Data[counter].acc_z * 100) / 100.0;
+            jsonObject["gyrX_C"] = round(Thigh_Data[counter].gyr_x * 100) / 100.0;
+            jsonObject["gyrY_C"] = round(Thigh_Data[counter].gyr_y * 100) / 100.0;
+            jsonObject["gyrZ_C"] = round(Thigh_Data[counter].gyr_z * 100) / 100.0;
           }
           // Serialize the JSON document to a string
           String jsonString;
@@ -355,13 +366,10 @@ void handleData(void *pvParameters)
       }
       else
       {
-        if(!esp_flag)
-        {
-          esp_now_unregister_recv_cb();
-          esp_now_deinit();
-          cx_flag = 0;
-          esp_flag = 1;
-        }
+        esp_now_unregister_recv_cb();
+        esp_now_deinit();
+        cx_flag = 0;
+        esp_flag = 1;
       }
       xSemaphoreGive(xSemaphore);
     }
@@ -386,4 +394,14 @@ bool getValue(String supabase_url, String target)
 
   bool value = doc[0][target];
   return value;
+}
+
+void sendPrediction(String supabase_url, String prediction)
+{
+  http.begin(supabase_url);
+  http.addHeader("apikey", API_KEY);
+  http.addHeader("Authorization", "Bearer " + String(API_KEY));
+  http.addHeader("Content-Type", "application/json");
+  // Adjust the payload as needed
+  String payload = "{\"prediction\": \"" + prediction + "\"}";
 }

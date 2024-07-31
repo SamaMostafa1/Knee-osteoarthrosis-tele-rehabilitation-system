@@ -37,8 +37,6 @@ class _EditHomePageState extends State<EditHomePage> {
   final FirebaseStorage _storage = FirebaseStorage.instance;
   String? _imageUrl;
 
-
-
   @override
   void initState() {
     super.initState();
@@ -65,7 +63,7 @@ class _EditHomePageState extends State<EditHomePage> {
   }
 
   void updateRecord(String button, String value) async {
-    await supabase.from('Controls').update({button: value}).eq('id', 1);
+    await supabase.from('Patient_Personal_Data').update({button: value}).eq('id', 1);
   }
 
   void writeData() {
@@ -87,10 +85,10 @@ class _EditHomePageState extends State<EditHomePage> {
       length: _textFieldController4.text.trim(),
       Gender: _textFieldController5.text.trim(),
     );
-    updateRecord("pat_height", userinfo.length);
-    updateRecord("pat_age", userinfo.age);
-    updateRecord("pat_weight", userinfo.weight);
-    updateRecord("pat_gender", userinfo.Gender);
+    updateRecord("height", userinfo.length);
+    updateRecord("age", userinfo.age);
+    updateRecord("weight", userinfo.weight);
+    updateRecord("gender", userinfo.Gender);
 
     dbRef.child(user.uid).set(userinfo.toJson()).then((_) {
       ScaffoldMessenger.of(context).showSnackBar(

@@ -8,7 +8,7 @@ import 'package:modern_login/pages/Splash.dart';
 import 'package:modern_login/pages/home_page.dart';
 import 'package:modern_login/pages/severity_page.dart';
 import 'package:modern_login/pages/instruction_page.dart';
-
+import 'package:modern_login/pages/stats.dart';
 import 'instruction_page.dart';
 import 'login_page.dart';
 
@@ -57,8 +57,7 @@ class MainPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => LoginPage()),
+                    MaterialPageRoute(builder: (context) => LoginPage()),
                   );
                 },
               ),
@@ -423,7 +422,11 @@ class MainPage extends StatelessWidget {
                           ),
                           child: InkWell(
                               onTap: () {
-                                print("Hi");
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => StatsPage()),
+                                );
                               },
                               splashColor: Colors.black12,
                               child: Column(

@@ -142,8 +142,10 @@ class _SeverityPageState extends State<SeverityPage> {
 
   @override
   void dispose() {
-    //udpSocket?.close();
+    udpSocket?.close();
     super.dispose();
+    updateRecord('protocol', false);
+    updateRecord('calibration', false);
   }
 
   List<Step> steps() => [
