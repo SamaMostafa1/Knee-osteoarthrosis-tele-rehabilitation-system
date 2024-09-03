@@ -1,0 +1,24 @@
+name,gender,leg,age,BMI,severity,patient_id
+marwa abdelaly,f,right,40.0,35.75595618954421,mild,1
+amal kamel,f,left,55.0,33.77777777777778,severe,2
+sanaa abd-elhusin,f,right,49.0,37.77777777777778,moderate,3
+mohamed saad,m,right,40.0,28.08626033057851,normal,4
+fayaa ahmed,f,right,36.0,28.763971071663377,severe,5
+aliaa ateya,f,right ,34.0,27.76709812465291,severe,6
+zakareia reda,m,right,58.0,33.63265306122449,normal,7
+sameh mostafa,m,right,43.0,41.207560691570364,normal,8
+samia abd-allah,f,left,,28.133656509695292,severe,9
+rehab helmy,m,right,35.0,29.1363163371488,normal,10
+mona reda,f,left,40.0,32.46618106139438,mild,11
+ola nohamed,f,right,44.0,25.816630212628635,moderate,12
+mona radwan,f,right,37.0,26.037493991347535,moderate,13
+shaimaa abdeldaym,f,right,33.0,26.22222222222222,normal,14
+nawal gomaa,f,right,35.0,17.577068685776098,normal,15
+hany salm,m,left,47.0,29.06879615089044,severe,16
+shaimaa mohmed,f,right,34.0,30.67484662576687,mild,17
+farhat refat,m,right,41.0,26.124567474048447,normal,18
+nadia bekhet,f,left,72.0,31.11111111111111,moderate,19
+nagwa youssef,f,right,47.0,20.028841531805796,normal,20
+mayada elhady,f,right,35.0,33.057851239669425,severe,21
+heba allah maaty,f,left,34.0,38.08532778355879,mild,22
+sanaa mahmoud,f,left,45.0,35.05047268066014,normal,23

@@ -1,0 +1,13 @@
+name,patient_id,gender,leg,age,weight,height,pain,stifness,phy_func,total_score,severity_score,severity,BMI
+marwa abdelaly,1,f,right,40,95,163,7,2,24,33,34.32,mild,35.75595619
+amal kamel,2,f,left,55,76,150,19,8,66,93,96.72,severe,33.77777778
+sanaa abd-elhusin,3,f,right,49,85,150,9,4,41,54,56.16,moderate,37.77777778
+mohamed saad,4,m,right,40,87,176,0,0,13,13,13.52,normal,28.08626033
+fayaa ahmed,5,f,right,36,70,156,14,4,44,62,64.48,moderate,28.76397107
+aliaa ateya,6,f,right ,34,65,153,14,7,43,64,66.56,moderate,27.76709812
+zakareia reda,7,m,right,58,103,175,5,0,7,12,12.48,normal,33.63265306
+sameh mostafa,8,m,right,43,138,183,0,3,4,7,7.28,normal,41.20756069
+samia abd-allah,9,f,left,,65,152,10,16,48,74,76.96,severe,28.13365651
+rehab helmy,10,m,right,35,70,155,8,0,14,22,22.88,normal,29.13631634
+mona reda,11,f,left,40,78,155,7,0,23,30,31.2,mild,32.46618106
+ola nohamed,12,f,right,44,72,167,8,5,31,44,45.76,mild,25.81663021
