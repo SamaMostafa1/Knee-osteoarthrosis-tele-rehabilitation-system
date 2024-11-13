@@ -4,7 +4,7 @@
 
 - [Introduction](#introduction)
 - [Overview](#Overview)
-- [System features](#Sytem features)
+- [System features](#Sytemfeatures)
 - [Project Structure](#project-structure)
 - [Team](#team)
 
@@ -23,10 +23,10 @@ The system consist of 3 primary modules :
   - ESP microcontrollers for data transimission.
   - Hardware housing
 - System  Verification :
-  - The system was validated against the IMU suit and FAB Recorder Software by calculating RMSE between knee angles measured by the two systems during the time up and go task (TUG) (3-meter walking and sit-to-stand transitions).
+  - The system was validated against the IMU suit and FAB Recorder Software by calculating RMSE between knee angles measured by the two systems during the time up and go task (TUG).
 - Data and features:
   -Data collection:
-    - A total number of 23 participants enrolled in data collection (18 patients with KOA and 5 control participants).
+    - A total number of 23 participants enrolled in data collection (18 patients with KOA and 5 controls).
   - Data Processing and feature extraction:
     - A second order law pass filter wa apllied.
     - Time domain features extracted
@@ -54,6 +54,7 @@ The system consist of 3 primary modules :
   - Tensor flow
 - Mobile application:
   - Flutter
+  
 | Team Members' Names                                  | 
 | ---------------------------------------------------- |
 | Rahma Abdelkader      | 
